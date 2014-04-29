@@ -1,7 +1,6 @@
 === ChargeBee ===
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
-Requires at least: 3.8.2
 Tested up to: 3.8.2 
 Stable tag: 1.0.0
 License: GPLv2 or later
