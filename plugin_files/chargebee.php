@@ -55,7 +55,6 @@ function install() {
 static function configure_chargebee_env() {
     $cboptions=get_option("chargebee");
     ChargeBee_Environment::configure($cboptions["site_domain"],$cboptions["api_key"]);
-
 }
 
 
@@ -65,7 +64,7 @@ function uninstall() {
 
 function chargebee_admin_menu() {
 	add_menu_page('ChargeBee Settings', 'ChargeBee', 'manage_options', 'plugin', 
-                       array("chargebee_wp_plugin","chargebee_admin_page"), "../wp-content/plugins/chargebee/assets/cb-fav.png" );
+                 array("chargebee_wp_plugin","chargebee_admin_page"), WP_PLUGIN_URL . "/chargebee/assets/cb-fav.png" );
 }
 
 static function includeSettings($cboptions){
@@ -103,7 +102,8 @@ function chargebee_admin_page() {
         try {
                if( isset( $_POST["default_plan"]) && !empty($_POST["default_plan"]) ) {
 	            $result = ChargeBee_Plan::retrieve($_POST["default_plan"]);
-                    if( isset($result->Plan()->trialPeriod) ) {
+                    // updating default plan only if has trial period or price zero.
+                    if( isset($result->Plan()->trialPeriod) || ($result->Plan()->price == 0) ) {
                        $cboptions["default_plan"] = $_POST["default_plan"]; 
                        update_option("chargebee",$cboptions);
                        echo '<div class="updated"><p><strong>Settings Updated</strong></p></div>';
