@@ -15,6 +15,7 @@ Author URI: https://www.chargebee.com
 $base = dirname(__FILE__);
 include($base.'/lib/ChargeBee.php');
 require_once($base . "/util.php");
+require_once($base . "/webhooks.php");
 $SITE_URL=site_url();
 
 register_activation_hook(__FILE__,array("chargebee_wp_plugin","install"));
@@ -53,8 +54,13 @@ function install() {
 
 
 static function configure_chargebee_env() {
-    $cboptions=get_option("chargebee");
-    ChargeBee_Environment::configure($cboptions["site_domain"],$cboptions["api_key"]);
+  $cboptions=get_option("chargebee");
+  ChargeBee_Environment::configure($cboptions["site_domain"],$cboptions["api_key"]);
+
+  if( isset($_GET) && isset($_GET["chargebee_webhook_call"]) && $_GET["chargebee_webhook_call"] == "true" ) {  
+    do_action("handle_webhook");
+    return;
+  }
 }
 
 
@@ -240,11 +246,10 @@ function chargebee_check_access($posts) {
 	return $posts;
     }
     $cboptions =get_option("chargebee");
+    $cbsubscription = apply_filters("get_cb_subscription", $user->ID);
     
     foreach($posts as $k => $post) {
        $cbplans = get_post_meta($post->ID, 'cb_post_plans', true);
-       $cbsubscription = do_action("get_cb_subscription", $user->ID);
-
        if( isset($cbplans['plans']) && is_array($cbplans['plans']) ) {   // check posts has plan restriction
            $plans = $cbplans['plans'];
            if( !is_user_logged_in() ) {

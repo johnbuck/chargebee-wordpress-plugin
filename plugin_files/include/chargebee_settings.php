@@ -92,7 +92,7 @@
         $CBAUTH_PASSWD = $cboptions["webhook_user_pass"];
       ?>
       <code> 
-        <?php echo $WEBHOOK_URL[0] . "://" . $CBAUTH_USER . ":" . $CBAUTH_PASSWD . "@" . $WEBHOOK_URL[1] . "/wp-content/plugins/chargebee/webhooks.php" ?>
+        <?php echo $WEBHOOK_URL[0] . "://" . $CBAUTH_USER . ":" . $CBAUTH_PASSWD . "@" . $WEBHOOK_URL[1] ?>?chargebee_webhook_call=true
         <br>
        </code>
        <br/>

@@ -4,8 +4,9 @@ $base = dirname(__FILE__);
 require_once($base.'/lib/ChargeBee.php');
 
 add_action('update_result',array("chargebee_meta","update_from_result"),10,1);
-add_action('get_cb_subscription', array("chargebee_meta", "chargebee_subscription_detail"), 10,1);
-add_action('get_cb_customer', array("chargebee_meta", "chargebee_customer_detail"), 10,1);
+
+add_filter('get_cb_subscription', array("chargebee_meta", "chargebee_subscription_detail"), 10,1);
+add_filter('get_cb_customer', array("chargebee_meta", "chargebee_customer_detail"), 10,1);
 
 class chargebee_meta {
 

@@ -17,7 +17,7 @@ ChargeBee Plugin For membership management in subscription businesses.
 = ChargeBee Feature Highlights =
 ChargeBee is your one shop stop for managing your subscriptions. You will be able to:
 
-* Provide trial period or you can choose to use a freemium model 
+* Provide trial period or you can choose to use a freemium model
 * Automatically invoice your customers and collect payment
 * Notify your customers during various stages of the customer life cycle, through our email notifications
 * Add one time charges
