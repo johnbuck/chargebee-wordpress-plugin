@@ -8,7 +8,7 @@ Plugin Name: ChargeBee
 Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
 Description: Manage Subscriptions From WordPress
 Author: ChargeBee
-Version: 0.9
+Version: 1.0
 Author URI: https://www.chargebee.com
 */
 
@@ -70,7 +70,7 @@ function uninstall() {
 
 function chargebee_admin_menu() {
 	add_menu_page('ChargeBee Settings', 'ChargeBee', 'manage_options', 'plugin', 
-                 array("chargebee_wp_plugin","chargebee_admin_page"), WP_PLUGIN_URL . "/chargebee/assets/cb-fav.png" );
+                 array("chargebee_wp_plugin","chargebee_admin_page"), WP_PLUGIN_URL . "/chargebee/cb-fav.png" );
 }
 
 static function includeSettings($cboptions){

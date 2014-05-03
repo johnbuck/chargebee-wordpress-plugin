@@ -55,16 +55,16 @@ Now you are ready to start using ChargeBee plugin.
 
 ##Screenshots
 1. Configuring your ChargeBee site name, api key and a default plan.
-    ![Site Name and API key](plugin_files/assets/screenshot-1.png)
+    ![Site Name and API key](plugin_files/screenshot-1.png)
 
 2. Providing the messages to be displayed for restricted content.
-    ![Restriction Messages](plugin_files/assets/screenshot-2.png)
+    ![Restriction Messages](plugin_files/screenshot-2.png)
 3. Webhook configuration
-    ![Webhook Configuration](plugin_files/assets/screenshot-3.png)
+    ![Webhook Configuration](plugin_files/screenshot-3.png)
 4. Publishing post with restriction based on plans.
-    ![Restricting posts and pages](plugin_files/assets/screenshot-4.png)
+    ![Restricting posts and pages](plugin_files/screenshot-4.png)
 5. User view of the content
-    ![Viewing restricted content](plugin_files/assets/screenshot-5.png)
+    ![Viewing restricted content](plugin_files/screenshot-5.png)
 
 
 ##Changelog
