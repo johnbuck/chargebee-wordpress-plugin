@@ -74,6 +74,7 @@ Now you are ready to start using ChargeBee plugin.
 
 == Changelog ==
 
+= 1.0 =
 Initial version of ChargeBee plugin.
 
 

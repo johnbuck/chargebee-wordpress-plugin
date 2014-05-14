@@ -33,7 +33,7 @@
                 <label for="tablecell">Default plan for Customer Registration/Subscription:</label>
            </th>
            <td>
-                <input name='default_plan' value='<?php echo $cboptions["default_plan"] ?>'
+                <input name='default_plan' value='<?php echo ( isset($cboptions["default_plan"]) ? $cboptions["default_plan"] : "" ) ?>'
                              placeholder='Plan Id in ChargeBee'>
                 <br/>
                 <span class="description">Optional field. Specify a default ChargeBee plan_id to signup new users in ChargeBee.</span>

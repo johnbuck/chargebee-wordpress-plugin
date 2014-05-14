@@ -18,6 +18,7 @@ require_once($base . "/util.php");
 require_once($base . "/webhooks.php");
 $SITE_URL=site_url();
 
+
 register_activation_hook(__FILE__,array("chargebee_wp_plugin","install"));
 register_deactivation_hook(__FILE__,array("chargebee_wp_plugin","uninstall"));
 add_action('admin_menu', array("chargebee_wp_plugin","chargebee_admin_menu"));
@@ -25,9 +26,10 @@ add_action('admin_menu', array("chargebee_wp_plugin","chargebee_access_metadata"
 add_action('init', array("chargebee_wp_plugin", "configure_chargebee_env") );
 add_action('user_register', array("chargebee_wp_plugin","chargebee_save_user_meta"), 10, 1 );
 add_action('save_post', array("chargebee_wp_plugin","chargebee_metabox_save"));
-add_filter("comments_open", array("chargebee_wp_plugin","check_for_comments"));
 add_filter("comments_array", array("chargebee_wp_plugin","check_for_comments"));
+add_filter("comments_open", array("chargebee_wp_plugin","check_for_comments"));
 add_filter('the_posts',array("chargebee_wp_plugin","chargebee_check_access"));
+
 
 class chargebee_wp_plugin {
 
@@ -56,7 +58,6 @@ function install() {
 static function configure_chargebee_env() {
   $cboptions=get_option("chargebee");
   ChargeBee_Environment::configure($cboptions["site_domain"],$cboptions["api_key"]);
-
   if( isset($_GET) && isset($_GET["chargebee_webhook_call"]) && $_GET["chargebee_webhook_call"] == "true" ) {  
     do_action("handle_webhook");
     return;
@@ -68,7 +69,7 @@ function uninstall() {
 	delete_option("chargebee");
 }
 
-function chargebee_admin_menu() {
+static function chargebee_admin_menu() {
 	add_menu_page('ChargeBee Settings', 'ChargeBee', 'manage_options', 'plugin', 
                  array("chargebee_wp_plugin","chargebee_admin_page"), WP_PLUGIN_URL . "/chargebee/cb-fav.png" );
 }
@@ -77,7 +78,7 @@ static function includeSettings($cboptions){
      require_once(dirname(__FILE__) . "/include/chargebee_settings.php");
 }
 
-function chargebee_admin_page() {
+static function chargebee_admin_page() {
 	$cboptions=get_option("chargebee");
 	$hidden_field_name="cb_hidden_field";
 
@@ -137,7 +138,7 @@ function chargebee_admin_page() {
 
 
 
-function check_for_comments($comments, $post_id) {
+static function check_for_comments($comments,$post_id = NULL) {
      global $post;
      if($post_id == null) {
          $post_id = $post->ID;
@@ -148,7 +149,7 @@ function check_for_comments($comments, $post_id) {
      }
 
      $user = wp_get_current_user();
-     if($user->roles[0] == 'administrator') {
+     if(isset($user->roles[0]) && $user->roles[0] == 'administrator') {
          return $comments;
      }
  
@@ -164,25 +165,25 @@ function check_for_comments($comments, $post_id) {
      return $comments;
 }
 
-function chargebee_access_metadata(){
+static function chargebee_access_metadata(){
     add_meta_box( 'chargebee-meta-box', 'ChargeBee Access Control', 
                   array('chargebee_wp_plugin','chargebee_meta_box'), 'post', 'normal', 'high' );
     add_meta_box( 'chargebee-meta-box', 'ChargeBee Access Control', 
                   array('chargebee_wp_plugin','chargebee_meta_box'), 'page', 'normal', 'high' );
 }
 
-function chargebee_meta_box() {
+static function chargebee_meta_box() {
     $cboptions=get_option("chargebee");
     global $post;
     $post_plans = get_post_meta($post->ID, 'cb_post_plans', true);
-    $plans = $post_plans["plans"];
+    $plans = isset($post_plans["plans"])? $post_plans["plans"] : null;
     $nonce_value = wp_create_nonce( plugin_basename(__FILE__) );
     require_once(dirname(__FILE__) . "/include/chargebee_meta_box.php");
 
 }
 
 
-function chargebee_save_user_meta($user_id) {
+static function chargebee_save_user_meta($user_id) {
       $info = get_userdata( $user_id );
       $cboptions=get_option("chargebee");
       
@@ -202,14 +203,13 @@ function chargebee_save_user_meta($user_id) {
 				                   )
 			             ));
             do_action('update_result', $result);
-            //@save user result.
        } catch ( ChargeBee_APIError $e ) {
             // if any error is from ChargeBee setting the user plan to null.
           update_user_meta($user_id, 'chargebee_plan', null);
        }
 }
 
-function chargebee_metabox_save($post_id) {
+static function chargebee_metabox_save($post_id) {
     
         if( empty($post_id) ) {
                 return false;
@@ -240,9 +240,9 @@ function chargebee_metabox_save($post_id) {
        
 }
 
-function chargebee_check_access($posts) {
+static function chargebee_check_access($posts) {
     $user = wp_get_current_user();
-    if($user->roles[0] == 'administrator') {
+    if(isset($user->roles[0]) && $user->roles[0] == 'administrator') {
 	return $posts;
     }
     $cboptions =get_option("chargebee");
