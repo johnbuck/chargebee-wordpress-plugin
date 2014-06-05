@@ -68,14 +68,19 @@ Now you are ready to start using ChargeBee plugin.
 
 
 ##Changelog
+= 1.1 =
+Webhook calls are checked with the existing customer subscription information and if any change found they are fetched from the ChargeBee.
 
-
+= 1.0 =
 Initial version of ChargeBee plugin.
 
 
 ##Upgrade Notice
 
-= 1.0 =
+= 1.1 =
+If the webook data is different from wordpress subscription and customer meta then Subscription or Customer retrieve API call is performed and then meta information are updated.
+
+= 1.0 = 
 This is the initial base version of ChargeBee plugin.
 
 

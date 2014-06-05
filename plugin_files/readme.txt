@@ -2,7 +2,7 @@
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
 Tested up to: 3.8.2 
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -74,11 +74,18 @@ Now you are ready to start using ChargeBee plugin.
 
 == Changelog ==
 
+= 1.1 = 
+Webhook calls are checked with the existing customer subscription information and if any change found they are fetched from the ChargeBee.
+
+= 1.0 =
 Initial version of ChargeBee plugin.
 
 
 == Upgrade Notice ==
 
+= 1.1 = 
+If the webook data is different from wordpress subscription and customer meta then Subscription or Customer retrieve API call is performed and then meta information are updated.
+  
 = 1.0 =
 This is the initial base version of ChargeBee plugin.
 
