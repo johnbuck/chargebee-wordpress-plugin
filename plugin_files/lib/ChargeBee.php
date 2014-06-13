@@ -13,7 +13,7 @@ checkExtentions();
 
 abstract class ChargeBee
 {
-	
+
   public static $verifyCaCerts = true;
 
   public static function getVerifyCaCerts() {
@@ -46,6 +46,7 @@ require(dirname(__FILE__) . '/ChargeBee/Model.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Subscription.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/SubscriptionAddon.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/SubscriptionCoupon.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/SubscriptionShippingAddress.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Customer.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/CustomerBillingAddress.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Card.php');
@@ -54,11 +55,13 @@ require(dirname(__FILE__) . '/ChargeBee/Models/Invoice.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceLineItem.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceDiscount.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceTax.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceLinkedTransaction.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Estimate.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/EstimateLineItem.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/EstimateDiscount.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/EstimateTax.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Transaction.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/TransactionLinkedInvoice.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Content.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Event.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/HostedPage.php');
@@ -67,4 +70,5 @@ require(dirname(__FILE__) . '/ChargeBee/Models/Addon.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Coupon.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/CouponCode.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Comment.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/PortalSession.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Download.php');

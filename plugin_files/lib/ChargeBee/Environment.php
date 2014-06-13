@@ -19,11 +19,11 @@ class ChargeBee_Environment
 		$this->apiKey = $apiKey;
 		if (ChargeBee_Environment::$chargebeeDomain == null) 
 		{
-                   $this->apiEndPoint = "https://$site.chargebee.com/api/v1";
+      $this->apiEndPoint = "https://$site.chargebee.com/api/v1";
 		} 
 		else 
 		{
-                    $this->apiEndPoint = ChargeBee_Environment::$scheme."://$site.".ChargeBee_Environment::$chargebeeDomain."/api/v1";
+      $this->apiEndPoint = ChargeBee_Environment::$scheme."://$site.".ChargeBee_Environment::$chargebeeDomain."/api/v1";
 		}		
 	}
 	

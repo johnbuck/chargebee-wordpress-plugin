@@ -15,7 +15,7 @@ class ChargeBee_Result
     function subscription() 
     {
         return $this->_get('subscription', 'ChargeBee_Subscription', 
-        array('addons' => 'ChargeBee_SubscriptionAddon', 'coupons' => 'ChargeBee_SubscriptionCoupon'));
+        array('addons' => 'ChargeBee_SubscriptionAddon', 'coupons' => 'ChargeBee_SubscriptionCoupon', 'shipping_address' => 'ChargeBee_SubscriptionShippingAddress'));
     }
 
     function customer() 
@@ -32,12 +32,13 @@ class ChargeBee_Result
     function invoice() 
     {
         return $this->_get('invoice', 'ChargeBee_Invoice', 
-        array('line_items' => 'ChargeBee_InvoiceLineItem', 'discounts' => 'ChargeBee_InvoiceDiscount', 'taxes' => 'ChargeBee_InvoiceTax'));
+        array('line_items' => 'ChargeBee_InvoiceLineItem', 'discounts' => 'ChargeBee_InvoiceDiscount', 'taxes' => 'ChargeBee_InvoiceTax', 'invoice_transactions' => 'ChargeBee_InvoiceLinkedTransaction'));
     }
 
     function transaction() 
     {
-        return $this->_get('transaction', 'ChargeBee_Transaction');
+        return $this->_get('transaction', 'ChargeBee_Transaction', 
+        array('invoice_transactions' => 'ChargeBee_TransactionLinkedInvoice'));
     }
 
     function hostedPage() 
@@ -89,6 +90,11 @@ class ChargeBee_Result
     function download() 
     {
         return $this->_get('download', 'ChargeBee_Download');
+    }
+
+    function portalSession() 
+    {
+        return $this->_get('portal_session', 'ChargeBee_PortalSession');
     }
 
 

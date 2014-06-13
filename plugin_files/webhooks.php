@@ -43,22 +43,22 @@ class chargebee_webhook {
       $fetch = false;
       if( $content->customer() != null) {
           do_action("check_userid_wp",$content->customer()->id);
-          $customer = apply_filters("get_cb_customer", $content->customer()->id);
+          $customer = apply_filters("cb_get_customer", $content->customer()->id);
           if( $customer != $content->customer() ) {
             $fetch = true;
           }
       }
       if( $content->subscription() != null ) {
           do_action("check_userid_wp",$content->subscription()->id);
-          $subscription = apply_filters("get_cb_subscription", $content->subscription()->id);
+          $subscription = apply_filters("cb_get_subscription", $content->subscription()->id);
           if( $subscription != $content->subscription() ) {
             $fetch = true;
           }
       }
 
-      if($fetch) { 
+      if($fetch) {
          $result = ChargeBee_Subscription::retrieve($content->subscription()->id);
-         do_action("update_result", $result);
+         do_action("cb_update_result", $result);
       }
    }
 

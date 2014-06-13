@@ -1,0 +1,54 @@
+
+/*flash message in the center of page*/
+.cb-flash{
+position: fixed;
+left: 0;
+right: 0;
+top: 120px;
+z-index: 111;
+text-align: center;
+}
+
+/*flash message content*/
+.cb-flash>span{
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+background: #fff;
+border: 1px solid #ddd;
+padding: 4px;
+display: inline-block;
+max-width: 90%;
+}
+
+/*text success color*/
+.cb-text-success {
+color: rgb(28, 185, 78);
+}
+
+/*text failure color*/
+.cb-text-failure {
+color:rgb(216, 60, 0);
+}
+
+/*override to full width*/
+.cb-table{
+width:100%;
+}
+
+/*table heading*/
+.cb-table th{
+background:#eee;
+}
+
+.cb-table th,
+.cb-table td{
+padding:8px;
+border-none;
+}
+
+/*customer current plan highlight*/
+.cb-current-plan {
+color: #000;
+background-color: #FAFAFA;
+}
