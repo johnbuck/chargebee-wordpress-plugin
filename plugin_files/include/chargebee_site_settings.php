@@ -1,4 +1,4 @@
-<div class='wrap'><h2>ChargeBee Settings </h2><hr>
+<div class='wrap'><h2>ChargeBee Settings <img src="https://www.chargebee.com/static/external_ref/cb-wp-logo.png" style="float:left; margin-right:15px;"> </h2><hr>
   <form action='' method='post'>
    <?php  wp_nonce_field("wp-action-cb-plugin-site-setting","nonce-cb-wordpress-action") ?>
    <h3>Account Settings</h3><hr/>

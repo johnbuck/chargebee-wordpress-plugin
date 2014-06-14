@@ -2,7 +2,7 @@
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
 Tested up to: 3.8.2 
-Stable tag: 1.0.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,6 +13,8 @@ The best recurring billing experience & membership specific content paywall on y
 ChargeBee Plugin For membership management in subscription businesses.
 
 [ChargeBee](https://www.chargebee.com/) is easy to use online billing platform for businesses using the paid membership model. With the ChargeBee wordpress Plugin, you will not only be able to manage all your subscriptions but also restrict content based on the plan the member has subscribed to.
+
+[youtube https://www.youtube.com/watch?v=ngVFPdmuBVw]
 
 = ChargeBee Feature Highlights =
 ChargeBee is your one shop stop for managing your subscriptions. You will be able to:
@@ -38,7 +40,6 @@ ChargeBee is your one shop stop for managing your subscriptions. You will be abl
 
 And much [more](https://www.chargebee.com/subscription-billing-saas-features.html).
 
-[youtube https://www.youtube.com/watch?v=ngVFPdmuBVw]
 
 = ChargeBee Plugin provides the following functionality out of the box =
 
@@ -55,7 +56,7 @@ If you need additional functionality, you could build it easily on top of this p
 
 == Installation ==
 
-= Plugin Installation 
+= Plugin Installation = 
 
 1. Download the latest version of the plugin, unzip the file on your computer and then upload it to your WordPress Plugin directory(/wp-content/plugins directory).
 2. In your WordPress admin console, activate ChargeBee in the "Plugins" section.
@@ -84,7 +85,7 @@ Checkout this video for a walk through on the initial setup
 = Plan Upgrade Page =
 You can use the plugin's default plan listing page to upgrade to a specific plan to view the restricted content.
 If users do not already have a valid credit card in ChargeBee, during upgrade they will directed to ChargeBee's hosted checkout page to complete the upgrade.
-[Checkout this video on how customer can upgrade their plan] (https://www.youtube.com/watch?v=Gtz0Qf7N370). 
+[Checkout this video on how customer can upgrade their plan](https://www.youtube.com/watch?v=Gtz0Qf7N370). 
 
 = Customer Portal Page = 
 ChargeBee's customer portal can also be linked to your WordPress site to allow users to view and update their account and payment information as well as view past invoices. 
