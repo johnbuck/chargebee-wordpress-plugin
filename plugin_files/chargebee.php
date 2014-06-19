@@ -88,13 +88,13 @@ static function configure_chargebee_env() {
          do_action("handle_webhook");
          return;
       } else if ( isset($_GET["chargebee_redirection"]) && $_GET["chargebee_redirection"] == "true" ) {
-         do_shortcode('[cb_redirect_handler]');    
+         cb_hosted_page_redirect_handler(null);
          return;
       } else if ( isset($_GET["chargebee_plan_id"]) && !empty($_GET["chargebee_plan_id"]) ) {
-         do_shortcode('[cb_checkout]' . $_GET['chargebee_plan_id'] . '[/cb_checkout]');
+         cb_checkout(array("cb_plan_id" => $_GET["chargebee_plan_id"])); 
          return; 
       } else if ( isset($_GET["chargebee_portal"]) && $_GET["chargebee_portal"] == "true" ) {
-         do_shortcode('[cb_account]'); 
+         cb_customer_portal(null); 
          return;
       } else if ( isset($_GET["chargebee_plan_page"]) && $_GET["chargebee_plan_page"] == "true" ) {
          if( !(isset($cboptions["plan_page"]) || empty($cboptions["plan_page"])) ) {
@@ -145,7 +145,7 @@ static function chargebee_admin_menu() {
                            array("chargebee_wp_plugin","chargebee_admin_page") );
         add_submenu_page('chargebee.php', 'Page Settings & Display Messages', 'Page Settings & Display Messages','manage_options', 
                           'cb_page_settings', array("chargebee_wp_plugin","chargebee_page_menu") );
-        add_submenu_page('chargebee.php', 'Plugin URLs', 'Plugin URLs','manage_options', 
+        add_submenu_page('chargebee.php', 'Plugin URLs & Short Codes', 'Plugin URLs & Short Codes','manage_options', 
                           'cb_short_codes', array("chargebee_wp_plugin","chargebee_urls") );
 }
 
@@ -183,7 +183,7 @@ static function chargebee_page_menu() {
 }
 
 static function chargebee_admin_page() {
-	$cboptions=get_option("chargebee");
+	$cboptions = get_option("chargebee");
 
 	if($_SERVER['REQUEST_METHOD'] == "GET") { 
             return chargebee_wp_plugin::includeSiteSettings($cboptions);
@@ -219,7 +219,7 @@ static function chargebee_admin_page() {
                        update_option("chargebee",$cboptions);
                        echo '<div class="updated"><p><strong>Settings Updated</strong></p></div>';
                     } else {
-                       echo '<div class="updated"><p><strong>Plan has no trial period.</strong></p></div>';
+                       echo '<div class="error"><p><strong>Only Trial or Zero dollar plans are allowed.</strong></p></div>';
                     }
                } else {
                    $result = ChargeBee_Plan::all();
@@ -289,7 +289,7 @@ static function chargebee_meta_box() {
 
 static function chargebee_save_user_meta($user_id) {
       $info = get_userdata( $user_id );
-      $cboptions=get_option("chargebee");
+      $cboptions = get_option("chargebee");
       
       update_user_meta($user_id, "cb_site", $cboptions['site_domain'] );
       // if default plan is not set then subscription will not be created when registering in WordPress.

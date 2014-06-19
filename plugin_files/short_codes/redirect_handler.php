@@ -8,11 +8,11 @@ try {
  $result = ChargeBee_HostedPage::retrieve($_GET['id']);
  $hosted_page = $result->hostedPage();
  $user = wp_get_current_user();
- if( $user->ID != $hosted_page->content()->customer()->id) {
-   echo '<div class="cb-flash"><span class="cb-text-failure">Error in Processing </span></div>'; 
-   return;
- }
  if( $hosted_page->state == "succeeded" ) {
+   if( $user->ID != $hosted_page->content()->customer()->id) {
+      echo '<div class="cb-flash"><span class="cb-text-failure">Errors in Processing </span></div>'; 
+      return;
+   }
    do_action('cb_update_result', $result->hostedPage()->content());
    $state = "checkout_success";
  } else if ( $hosted_page->state == "cancelled" ) {

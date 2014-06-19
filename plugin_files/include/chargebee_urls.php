@@ -38,6 +38,15 @@
     </span>
    </td>
  </tr>
-
 </table>
+<h2> Short Codes </h2>
+<hr>
+<div class="description"> Plugin has inbuilt short codes that can be embeded in your posts or pages. </div>
+<br/>
+<li> Content to be displayed for the users in the specified plan ids in "current_plan_in" attributes
+<pre>[cb_decision current_plan_in="&ltplan_id-1&gt,&ltplan_id-2&gt"] Switch to our Gold plan and get full access [/cb_decision]</pre>
+</li> 
+<li>Content to be displayed for the users not in the specified plan ids in "current_plan_not_in" attributes
+<pre>[cb_decision current_plan_not_in="&ltplan_id-1&gt,&ltplan_id-2&gt"] Switch to our premium plan which is just $4 per month [/cb_decision]</pre>
+</li>
 </div>

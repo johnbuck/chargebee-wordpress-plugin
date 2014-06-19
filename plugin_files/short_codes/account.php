@@ -5,7 +5,7 @@
 if( !is_user_logged_in() ) {
   redirect_to_url(wp_login_url());  
 }
-try{
+try {
   $return_url = site_url();
   $result = ChargeBee_PortalSession::create(array("redirectUrl" => $return_url,
                                                 "customer" => array("id" =>get_current_user_id())));

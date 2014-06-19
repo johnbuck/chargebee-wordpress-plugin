@@ -79,17 +79,40 @@ You can restrict access to posts by specifying a plan for them, making it availa
 3. Update your changes.
 
 Checkout this video for a walk through on the initial setup
-
-[Checkout this video for a walk through on the initial setup](https://www.youtube.com/watch?v=xJZJ2O89xXw).
+[youtube https://www.youtube.com/watch?v=xJZJ2O89xXw]
 
 = Plan Upgrade Page =
 You can use the plugin's default plan listing page to upgrade to a specific plan to view the restricted content.
 If users do not already have a valid credit card in ChargeBee, during upgrade they will directed to ChargeBee's hosted checkout page to complete the upgrade.
-[Checkout this video on how customer can upgrade their plan](https://www.youtube.com/watch?v=Gtz0Qf7N370). 
+
+Checkout this video on how customer can upgrade their plan
+[youtube https://www.youtube.com/watch?v=Gtz0Qf7N370] 
 
 = Customer Portal Page = 
 ChargeBee's customer portal can also be linked to your WordPress site to allow users to view and update their account and payment information as well as view past invoices. 
-[Checkout out this video on what is ChargeBee portal and how it can be used](https://www.youtube.com/watch?v=krgvx1bPzvU)
+
+Checkout out this video on what is ChargeBee portal and how it can be used
+[youtube https://www.youtube.com/watch?v=krgvx1bPzvU]
+
+== Frequently Asked Questions ==
+
+= What is webhook? How to test it in local environment? =
+
+Webhook are the callback service to notify the changes that happen to subscriptions in ChargeBee to WordPress. For more information see <a href="https://www.chargebee.com/docs/events_and_webhooks.html#webhooks">here</a>.
+
+You cannot test webhook in local environment. If you want to check it out you should use local tunneling tool like <a href="https://ngrok.com/ngrok">ngrok</a>. 
+
+= How good secure is this plugin? =
+
+ChargeBee plugin integerates your WordPress with the <a href="https://app.chargebee.com">ChargeBee app</a>. Customer give their card details in checkout page that is hosted in ChargeBee. So, plugin reduces PCI compliance in your WordPress site.
+
+= If plugin uses ChargeBee checkout page, what level of customization can I do in the checkout page? =
+
+Each and every part of ChargeBee hosted page is customizable. You can also customize the look of the checkout page similar to your WordPress site.
+
+= What is ChargeBee customer portal page? =
+
+ChargeBee customer portal page allows your site users to manage their own card information, billing information and also they can see their state of their subscription.
 
 == Screenshots ==
 
@@ -105,6 +128,9 @@ ChargeBee's customer portal can also be linked to your WordPress site to allow u
 
 == Changelog ==
 
+= 2.1 =
+Short code had been added to show custom messages based on the user plan
+
 = 2.0 =
 Option for customer to view the available plans and to switch their plan by themselves. Customers can use the ChargeBee hosted page and customer portal feature.
 
@@ -117,6 +143,9 @@ Initial version of ChargeBee plugin.
 
 == Upgrade Notice ==
 
+= 2.1 =
+Short code had been added to show custom messages based on the user plan
+ 
 = 2.0 =
 Option for customer to view the available plans and to switch their plan by themselves. Customers can use the ChargeBee hosted page and customer portal feature.
 
