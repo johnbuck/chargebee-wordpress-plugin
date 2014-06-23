@@ -5,6 +5,11 @@
 if( !is_user_logged_in() ) {
   redirect_to_url(wp_login_url());  
 }
+$user = wp_get_current_user();
+$cb_subscription = apply_filters("cb_get_subscription", $user->ID);
+if( !isset($cb_subscription) ) {
+  return;
+}
 try {
   $return_url = site_url();
   $result = ChargeBee_PortalSession::create(array("redirectUrl" => $return_url,

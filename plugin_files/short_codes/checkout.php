@@ -9,16 +9,9 @@ try {
    $cboptions = get_option("chargebee");
    $cb_customer = apply_filters("cb_get_customer", $user->ID);
    $cb_subscription = apply_filters("cb_get_subscription", $user->ID);
-   if( isset($cb_subscription) ) {
-      // Redirecting the user to home page if the user asked to switch to the same current plan id.
-      if( $cb_subscription->planId == $cb_plan_id ) {
-        redirect_to_url(site_url());
-        return;
-      }
-   } 
    $checkout_existing = False;
    $checkout_new = False;
-   if( $cb_customer != null && isset($cb_customer->cardStatus) ){
+   if( $cb_customer != null && isset($cb_customer->cardStatus) ) {
       // ChargeBee customer is present and found that no_card or expired_card then taking to checkout existing hosted page.
       if ($cb_customer->cardStatus == "no_card" || $cb_customer->cardStatus == "expired") {
          $checkout_existing = True;

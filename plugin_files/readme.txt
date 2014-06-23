@@ -2,7 +2,7 @@
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
 Tested up to: 3.8.2 
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
