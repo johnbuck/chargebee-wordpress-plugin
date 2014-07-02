@@ -37,7 +37,7 @@ try {
           $cb_subscription = apply_filters("cb_get_subscription",$user->ID);
           $result = ChargeBee_Subscription::update($cb_subscription->id, array("planId" => $cb_plan_id));
           do_action('cb_update_result', $result);
-          $url = generate_page_link(get_permalink($cboptions['plan_page']), "state=checkout_success");
+          $url = generate_page_link(get_permalink($cboptions['plan_page']), "chargebee_checkout_state=checkout_success");
           redirect_to_url($url); 
        }
    }

@@ -11,7 +11,7 @@ if( !isset($cb_subscription) ) {
   return;
 }
 try {
-  $return_url = site_url();
+  $return_url = generate_page_link(site_url() , "chargebee_portal_redirection=true");
   $result = ChargeBee_PortalSession::create(array("redirectUrl" => $return_url,
                                                 "customer" => array("id" =>get_current_user_id())));
   $account_url = $result->portalSession()->accessUrl;

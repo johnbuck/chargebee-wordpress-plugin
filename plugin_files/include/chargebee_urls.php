@@ -41,12 +41,17 @@
 </table>
 <h2> Short Codes </h2>
 <hr>
-<div class="description"> Plugin has inbuilt short codes that can be embeded in your posts or pages. </div>
+<div class="description"> The plugin supports short codes that can be embedded into posts or pages on your site. This can be used to display messages or content to users based on their current plan. </div>
 <br/>
-<li> Content to be displayed for the users in the specified plan ids in "current_plan_in" attributes
-<pre>[cb_decision current_plan_in="&ltplan_id-1&gt,&ltplan_id-2&gt"] Switch to our Gold plan and get full access [/cb_decision]</pre>
+<li>
+Specify the plan id(s) using the shortcode "cb_decision" with the attribute "current_plan_in". Users on the specified plan ID will see the message included. 
+<br/><br/>
+Syntax : <pre>[cb_decision current_plan_in="&ltplan_id-1&gt,&ltplan_id-2&gt"] Message Content [/cb_decision]</pre>
+E.g : <pre>[cb_decision current_plan_in="silver,bronze"] Upgrade to the Gold plan to continue to get access to the content. [/cb_decision] </pre>
 </li> 
-<li>Content to be displayed for the users not in the specified plan ids in "current_plan_not_in" attributes
-<pre>[cb_decision current_plan_not_in="&ltplan_id-1&gt,&ltplan_id-2&gt"] Switch to our premium plan which is just $4 per month [/cb_decision]</pre>
+<li> Specify the plan id(s) using the shortcode "cb_decision" with the attribute "current_plan_not_in". Users NOT on the specified plan ID will see the message included.
+<br/><br/>
+Syntax : <pre>[cb_decision current_plan_not_in="&ltplan_id-1&gt,&ltplan_id-2&gt"] Message Content [/cb_decision]</pre>
+E.g : <pre>[cb_decision current_plan_not_in="gold"] Upgrade to the Gold plan to continue to get access to the content. [/cb_decision] </pre>
 </li>
 </div>

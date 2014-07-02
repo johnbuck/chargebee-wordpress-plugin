@@ -1,4 +1,9 @@
-<div class='wrap'><h2>ChargeBee Settings <img src="https://www.chargebee.com/static/external_ref/cb-wp-logo.png" style="float:left; margin-right:15px;"> </h2><hr>
+<div class='wrap'><h2>ChargeBee Settings 
+ <img src='https://www.chargebee.com/static/external_ref/cb-wp-logo.png' style="float:left; margin-right:15px;">
+ <?php if(!isset($cboptions["site_domain"])) {  ?>
+ &emsp;<a target="_blank" href="http://www.youtube.com/watch?v=xJZJ2O89xXw" style="font-size:12px;"><img style="vertical-align:middle;margin:-3px 5px 0;" src='https://www.chargebee.com/static/external_ref/cb-icon-video.png'>Check our video for basic setup</a> 
+ <?php } ?>
+</h2><hr>
   <form action='' method='post'>
    <?php  wp_nonce_field("wp-action-cb-plugin-site-setting","nonce-cb-wordpress-action") ?>
    <h3>Account Settings</h3><hr/>
@@ -9,9 +14,9 @@
            </th>
            <td>
                https://<input type='text' name='cb[site_domain]' size='15' placeholder="acme" 
-                         value='<?php echo $cboptions["site_domain"] ?>' />.chargebee.com
+                         value='<?php echo isset($cboptions["site_domain"]) ? $cboptions["site_domain"] : "" ?>' />.chargebee.com
                <br>
-               <span class="description"> Your site name as registered in <a href="https://app.chargebee.com" target="_blank">ChargeBee</a>. When testing configure your test site (eg: acme-test).</span>
+               <span class="description"> Your site name as registered in <a href="https://app.chargebee.com" target="_blank">ChargeBee</a>. If you dont have one, <a target="_blank" href="https://app.chargebee.com/signup"> sign up</a> for free. When testing configure your test site (eg: acme-test). </span>
            </td>
        </tr>
        <tr valign="top">
@@ -20,7 +25,7 @@
            </th>
            <td>
               <input class='regular-text' type='text' size='36' name='cb[api_key]' placeholder='api-key' 
-                                  value='<?php echo $cboptions["api_key"] ?>' />
+                                  value='<?php echo isset($cboptions["api_key"]) ? $cboptions["api_key"] : "" ?>' />
               <br/>
               <span class="description">Your ChargeBee API key with "Full Access" permission.
               </span>
@@ -100,7 +105,7 @@
       </div>
       <br>
        <code>
-           <?php echo site_url() ?>?chargebee_redirection=true
+           <?php echo site_url() ?>?chargebee_checkout_redirection=true
        </code>
       <br/>
       <p class="submit">

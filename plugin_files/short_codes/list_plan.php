@@ -2,7 +2,7 @@
 /*
  * Generates a sample plan page.
  */
-$cboptions = get_option("chargebee");
+global $cboptions; 
 try {
 ?>
 <table class="cb-table">
@@ -17,6 +17,7 @@ try {
    $limit = 30;
    $offset = null;
    $current_user = wp_get_current_user();
+   $cb_current_plan = apply_filters("cb_get_user_plan", $current_user->ID);
    while ($nextIteration) :
        $all = ChargeBee_Plan::all(array("limit" => $limit, "offset" => $offset ));
        foreach($all as $entry ) {
@@ -24,9 +25,9 @@ try {
             if( $plan->status == "archived" ) {
 		  continue;
             }
-            $is_current_plan = isset($current_user->chargebee_plan) && $current_user->chargebee_plan == $plan->id ?>  
+            $is_current_plan = isset($cb_current_plan) && $cb_current_plan== $plan->id ?>  
             <tr class="<?php echo $is_current_plan ? "cb-current-plan": "" ?>">
-	         <td> <?php echo $plan->invoiceName ?> </td>
+	         <td> <?php echo isset($plan->invoiceName) ? $plan->invoiceName : $plan->name ?> </td>
 	         <td> <?php echo plan_description($plan, $cboptions["currency"]) ?> </td>
 	         <td> <?php echo plan_price($plan, $cboptions["currency"]) ?> </td>
 		 <td> <?php if( $is_current_plan) { ?> 
@@ -49,7 +50,8 @@ try {
 <?php 
 } catch (ChargeBee_APIError $e) { ?>
   </table>
-  <?php if (is_admin() ) { ?>
+  <?php 
+    if (is_admin() ) { ?>
       <div class="cb-text-failure"> Couldnt find any plans in your ChargeBee site </div> 
    <?php } else { ?>
       <div class="cb-text-failure"> No plan found </div> 

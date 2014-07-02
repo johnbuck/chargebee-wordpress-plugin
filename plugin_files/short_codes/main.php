@@ -38,6 +38,10 @@ function cb_customer_portal($atts) {
     include(dirname(__FILE__) . "/account.php");
 }
 
+/*
+ * Short code that Display the passed content current plan id. The attribute can be "current_plan_in" or "current_plan_not_in".
+ * [cb_decision current_plan_in="basic,professional"] Content [/cb_decision]
+ */
 function cb_check_for_plans($atts, $content = null) {
     $current_plan_in = explode(",", $atts["current_plan_in"]);
     $current_plan_not_in = explode(",", $atts["current_plan_not_in"]);

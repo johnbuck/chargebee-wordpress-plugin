@@ -2,56 +2,63 @@
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
 Tested up to: 3.8.2 
-Stable tag: 2.1
+Stable tag: 2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The best recurring billing experience & membership specific content paywall on your wordpress site using ChargeBee Subscription Billing Platform.  
+The best recurring billing experience with paywall functionality to control accesss to webpage content on your WordPress site using ChargeBee's subscription billing platform.  
 
 == Description ==
 
-ChargeBee Plugin For membership management in subscription businesses.
+A plugin to manage memberships on your WordPress site with ChargeBee.
 
-[ChargeBee](https://www.chargebee.com/) is easy to use online billing platform for businesses using the paid membership model. With the ChargeBee wordpress Plugin, you will not only be able to manage all your subscriptions but also restrict content based on the plan the member has subscribed to.
+This plugin also helps publishers using WordPress to easily provide access/restrict content to subscribers using the plans configured in ChargeBee.
+
+ChargeBee manages the entire subscription life-cycle starting from trial to paid to canceled and also freemium users. The plugin automatically updates changes that happen in ChargeBee to WordPress. 
+
+It also connects your subscribers to ChargeBee's customer portal in case you want to provide them with the option to manage their account. This includes viewing past payments, updating card details and also canceling their subscriptions.
 
 [youtube https://www.youtube.com/watch?v=ngVFPdmuBVw]
 
-= ChargeBee Feature Highlights =
-ChargeBee is your one shop stop for managing your subscriptions. You will be able to:
+= What does the plugin do? =
 
-* Provide trial period or you can choose to use a freemium model
+* The plugin acts as a paywall in resticting content to your users based on their pricing plans.
+* Provides the option to add customers to a default plan during signup.
+* Changes that takes place to subscriptions in ChargeBee are updated in WordPress. These changes are updated using webhooks.
+* Connects to ChargeBee's customer portal for your users to easily access and manage their account and payment information.
+
+= Easy access to ChargeBee's features with URLs =
+
+The plugin includes URLs that can be used for specific functions such as changing an existing user's subscription to another plan and also to connect users to ChargeBee's customer portal. All this can be done within your WordPress site.
+
+= Access users' ChargeBee meta information using filters =
+
+* apply_filter("cb_get_subscription", $user_id) - gives the user's subscription details present in ChargeBee. This will be in the [ChargeBee Subscription](https://apidocs.chargebee.com/docs/api/subscriptions?lang=php#subscription_attributes) object format.
+* apply_filter("cb_get_customer", $user_id) - gives the user's customer details present in ChargeBee. This will be in the [ChargeBee Customer](https://apidocs.chargebee.com/docs/api/customers?lang=php#customer_attributes) object format.
+* apply_filters("cb_get_user_plan", $user_id) - gives the current user's subscription plan ID in ChargeBee.
+
+= Short Codes = 
+
+The plugin supports short codes that can be embedded into posts or pages on your site. This can be used to display messages or content to users based on their current plan. It can also be used to create a custom pricing page.
+
+= About ChargeBee =
+
+[ChargeBee](https://www.chargebee.com/) is an easy to use online billing platform for subscription businesses. 
+
+With ChargeBee you can:
+
+* Manage trial and freemium subscriptions
 * Automatically invoice your customers and collect payment
-* Notify your customers during various stages of the customer life cycle, through our email notifications
-* Add one time charges
-* Set up, run and manage different discount campaigns
-* Handle credits 
-* Use your choice  of payment gateway. ChargeBee suppports Stripe, PayPal Pro, Braintree, Authorize.net eWay, and many more
-* Suitable for merchants based out of USA, Canada, Australia, Great Britain, Singapore and 48+ more countries 
-* An intuitive system that handles proration when a customer changes plans
-* Offline Payments Tracking
-* Metered Billing
-* Completely customizable Payment Pages to look exactly like your gorgeous website
-* Data Portability
-* Reports and Dashboards
-* Manage Shipping Address
-* EU VAT and General Tax Support
-* Comprehensive API support. Easy to use client libraries for Python, Ruby, JAVA, PHP and .NET
-* Free Tech and Setup Support
+* Notify your customers during various stages of the customer life cycle using our email notifications
+* Set up, run and manage different discount campaigns 
+* Use your choice of payment gateway. ChargeBee suppports Stripe, PayPal Pro, Braintree, Authorize.net, eWay and much more
+* Automatically prorate subscriptions and also handle credits and refunds
+* Create and manage offline subscriptions
+* Completely customizable hosted payment pages and customer portal
+* Handle EU VAT and general taxes
+* Comprehensive API support with multiple client libraries
 
-And much [more](https://www.chargebee.com/subscription-billing-saas-features.html).
-
-
-= ChargeBee Plugin provides the following functionality out of the box =
-
-* When a user registers in wordpress a subscription is automatically created in ChargeBee with a default plan. You can control this behaviour.
-* You will be able to share content with your customers based on their specific subscribed plan. The wordpress user id is used as the identifier with ChargeBee for user access.
-* The plugin keeps the subscriber & customer information in sync with ChargeBee using ChargeBee webhook functionality. More on this in admin section. 
-
-
-= Additional Functionality =
-If you need additional functionality, you could build it easily on top of this plugin using ChargeBee's php library that is included in this plugin. Please view the [apidocs](https://apidocs.chargebee.com/docs/api) for reference. 
-
-**Note:** The api key initialization is automatically handled.
+Find out [more](https://www.chargebee.com/subscription-billing-saas-features.html).
 
 
 == Installation ==
@@ -67,8 +74,11 @@ Note: You can also install the plugin directly through your WordPress admin cons
 
 = Plugin Setup = 
 
-1. Configure your ChargeBee site name, API key and default plan.
-2. Copy the webhook and "Return & Cancel" URLs from WordPress and configure them in ChargeBee.
+[youtube https://www.youtube.com/watch?v=xJZJ2O89xXw]
+
+1. A ChargeBee account. <a href="https://app.chargebee.com/signup" target="_blank">Signup</a> for a free trial if you don't have one.
+2. Configure your ChargeBee site name, API key and default plan.
+3. Copy the webhook and "Return & Cancel" URLs from WordPress and configure them in ChargeBee.
 
 Save your changes to complete the setup.
 
@@ -78,41 +88,49 @@ You can restrict access to posts by specifying a plan for them, making it availa
 2. Use the "ChargeBee Access Control" section located at the bottom of the post to specify which plans have access to that specific post.
 3. Update your changes.
 
-Checkout this video for a walk through on the initial setup
-[youtube https://www.youtube.com/watch?v=xJZJ2O89xXw]
-
 = Plan Upgrade Page =
+
+[youtube https://www.youtube.com/watch?v=Gtz0Qf7N370] 
+
 You can use the plugin's default plan listing page to upgrade to a specific plan to view the restricted content.
 If users do not already have a valid credit card in ChargeBee, during upgrade they will directed to ChargeBee's hosted checkout page to complete the upgrade.
 
-Checkout this video on how customer can upgrade their plan
-[youtube https://www.youtube.com/watch?v=Gtz0Qf7N370] 
 
 = Customer Portal Page = 
+
+[youtube https://www.youtube.com/watch?v=krgvx1bPzvU]
+
 ChargeBee's customer portal can also be linked to your WordPress site to allow users to view and update their account and payment information as well as view past invoices. 
 
-Checkout out this video on what is ChargeBee portal and how it can be used
-[youtube https://www.youtube.com/watch?v=krgvx1bPzvU]
 
 == Frequently Asked Questions ==
 
-= What is webhook? How to test it in local environment? =
+= How do I get support? =
 
-Webhook are the callback service to notify the changes that happen to subscriptions in ChargeBee to WordPress. For more information see <a href="https://www.chargebee.com/docs/events_and_webhooks.html#webhooks">here</a>.
+Chat with us <a target="_blank" href="https://www.hipchat.com/glHFgk0FI">here</a> or email us at support@chargebee.com.
 
-You cannot test webhook in local environment. If you want to check it out you should use local tunneling tool like <a href="https://ngrok.com/ngrok">ngrok</a>. 
+= What are webhooks? How do I test them in a local environment? =
 
-= How good secure is this plugin? =
+Webhooks are callback services that notifies WordPress about the subscription changes that happen in ChargeBee. Learn more about webhooks <a target="_blank" href="https://www.chargebee.com/docs/events_and_webhooks.html#webhooks">here</a>
 
-ChargeBee plugin integerates your WordPress with the <a href="https://app.chargebee.com">ChargeBee app</a>. Customer give their card details in checkout page that is hosted in ChargeBee. So, plugin reduces PCI compliance in your WordPress site.
+You cannot test webhooks locally. If you want to try it out locally. you should use a local tunneling tool like <a target="_blank" href="https://ngrok.com/">ngrok</a>.
 
-= If plugin uses ChargeBee checkout page, what level of customization can I do in the checkout page? =
+= Can I securely collect credit card information? =
 
-Each and every part of ChargeBee hosted page is customizable. You can also customize the look of the checkout page similar to your WordPress site.
+The plugin connects your WordPress site with the <a target="_blank" href="https://app.chargebee.com">ChargeBee app</a> and uses ChargeBee's hosted checkout page for sign ups. Since the card details are collected through the hosted pages, you do not handle any sensitive card information, reducing your PCI compliance requirements.
 
-= What is ChargeBee customer portal page? =
+= Are the hosted checkout pages customizable? =
 
-ChargeBee customer portal page allows your site users to manage their own card information, billing information and also they can see their state of their subscription.
+Absolutely! Our hosted pages support themes and are customizable. You can easily make the hosted pages match your website's look and branding. Learn more <a target="_blank" href="https://www.chargebee.com/docs/themes.html">here</a>.
+
+
+= Does the plugin include a customer portal? =
+
+Yes. ChargeBee has its own customer portal that allows your site users to view and manage their subscription information.
+
+= ChargeBee has many APIs. How do I invoke them in WordPress? =
+
+In order to invoke other APIs, just call the required API code from within WordPress. Initializing the environment for calling ChargeBee's APIs will be taken care by the plugin. After calling the API ensure that you update the user meta information of ChargeBee in WordPress. The "do_action('cb_update_result', $result)" takes the response received during the API call as input and updates the ChargeBee user meta information in WordPress.
 
 == Screenshots ==
 
@@ -128,6 +146,9 @@ ChargeBee customer portal page allows your site users to manage their own card i
 
 == Changelog ==
 
+= 2.2 =
+Updating ChargeBee user meta in WordPress after redirecting from customer portal, removed "chargebee plan" property, if invoice name is null then replace it will plan name and also added filters for developers to access the ChargeBee user meta information.
+
 = 2.1 =
 Short code had been added to show custom messages based on the user plan
 
@@ -142,6 +163,9 @@ Initial version of ChargeBee plugin.
 
 
 == Upgrade Notice ==
+
+= 2.2 =
+Updating ChargeBee user meta in WordPress after redirecting from customer portal, removed "chargebee plan" property, if invoice name is null then replace it will plan name and also added filters for developers to access the ChargeBee user meta information.
 
 = 2.1 =
 Short code had been added to show custom messages based on the user plan

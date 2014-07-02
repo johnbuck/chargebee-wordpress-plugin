@@ -1,15 +1,15 @@
 <?php
 /**
  * @package ChargeBee
- * @version 2.1
+ * @version 2.2
  */
 /*
-Plugin Name: ChargeBee
-Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
-Description: Manage Subscriptions From WordPress
-Author: ChargeBee
-Version: 2.1
-Author URI: https://www.chargebee.com
+ Plugin Name: ChargeBee
+ Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
+ Description: Manage Subscriptions From WordPress
+ Author: ChargeBee
+ Version: 2.2
+ Author URI: https://www.chargebee.com
 */
 
 $base = dirname(__FILE__);
@@ -23,10 +23,9 @@ $SITE_URL=site_url();
 
 register_activation_hook(__FILE__,array("chargebee_wp_plugin","install"));
 
-add_action('init', array("chargebee_wp_plugin", "configure_chargebee_env") );
+add_action('init', array("chargebee_wp_plugin", "init_chargebee") );
 
 add_action('user_register', array("chargebee_wp_plugin","chargebee_save_user_meta"), 10, 1 );
-add_filter('login_redirect', array("chargebee_wp_plugin","cb_login_redirect"), 10, 3);
 
 add_action('admin_menu', array("chargebee_wp_plugin","chargebee_admin_menu"));
 add_action('admin_menu', array("chargebee_wp_plugin","chargebee_access_metadata"));
@@ -49,6 +48,9 @@ static function install() {
 
     if(!get_option("chargebee"))  {
          $AUTH_USER=$current_user->user_login;
+         if( strpos($AUTH_USER, "@") ) {
+          $AUTH_USER = substr($AUTH_USER, 0, strpos($AUTH_USER,"@")) ;
+         }
          $SALT=uniqid(mt_rand(), true);
          $AUTH_PASSWD=sha1($SALT.$DOMAIN);
          $SITE_URL=site_url();
@@ -78,16 +80,22 @@ static function install() {
 }
 
 
-
-
-static function configure_chargebee_env() {
-  $cboptions=get_option("chargebee");
-  ChargeBee_Environment::configure($cboptions["site_domain"],$cboptions["api_key"]);
+static function init_chargebee() {
+  global $cboptions, $cb_user_meta;
+  $cboptions = get_option("chargebee");
+  $user = wp_get_current_user();
+ 
+  if( isset($cboptions["site_domain"]) && isset($cboptions["api_key"])) { 
+     ChargeBee_Environment::configure($cboptions["site_domain"],$cboptions["api_key"]);
+  }
+  apply_filters("cb_get_subscription", $user->ID);
+  apply_filters("cb_get_customer", $user->ID );
+ 
   if( isset($_GET) ) {
       if ( isset($_GET["chargebee_webhook_call"]) && $_GET["chargebee_webhook_call"] == "true" ) {  
          do_action("handle_webhook");
          return;
-      } else if ( isset($_GET["chargebee_redirection"]) && $_GET["chargebee_redirection"] == "true" ) {
+      } else if ( isset($_GET["chargebee_checkout_redirection"]) && $_GET["chargebee_checkout_redirection"] == "true" ) {
          cb_hosted_page_redirect_handler(null);
          return;
       } else if ( isset($_GET["chargebee_plan_id"]) && !empty($_GET["chargebee_plan_id"]) ) {
@@ -105,13 +113,15 @@ static function configure_chargebee_env() {
            redirect_to_url($url);
            return;
          }
-      } else if ( isset($_GET['state']) && !empty($_GET['state']) ) {
-         if( $_GET['state'] == "checkout_success" ) {
+      } else if ( isset($_GET['chargebee_checkout_state']) && !empty($_GET['chargebee_checkout_state']) ) {
+         if( $_GET['chargebee_checkout_state'] == "checkout_success" ) {
            echo $cboptions["checkout_success_msg"];
-         } else if ($_GET['state'] == "checkout_cancelled" ) {
+         } else if ($_GET['chargebee_checkout_state'] == "checkout_cancelled" ) {
            echo $cboptions["checkout_failure_msg"] ;
          }
-      }
+      } else if ( isset($_GET['chargebee_portal_redirection']) && $_GET['chargebee_portal_redirection'] == "true" ) {
+         do_action("cb_sync_user_meta", $user->ID); 
+      } 
   }
 }
 
@@ -123,20 +133,6 @@ static function chargebee_css() {
 static function chargebee_admin_assets() {
     wp_enqueue_script('cb_wp_admin',plugins_url("js/chargebee_admin.js" ,__FILE__), array('jquery')); 
 }
-
-function cb_login_redirect( $redirect_to, $request, $user ) { 
-      global $user;
-      if ( isset( $user->roles ) && is_array( $user->roles ) ) {
-           if ( in_array( 'administrator', $user->roles ) ) {
-               return $redirect_to;
-           } else {
-               return home_url();
-           }
-       } else {
-          return $redirect_to;
-       }
-}
-
 
 static function chargebee_admin_menu() {
 	add_menu_page('ChargeBee', 'ChargeBee', 'manage_options', 'chargebee.php', 
@@ -162,7 +158,7 @@ static function chargebee_urls() {
 }
 
 static function chargebee_page_menu() {
-    $cboptions = get_option("chargebee");
+    global $cboptions; 
     
     if($_SERVER['REQUEST_METHOD'] == "GET") {
       return chargebee_wp_plugin::includePageSettings($cboptions);
@@ -183,7 +179,7 @@ static function chargebee_page_menu() {
 }
 
 static function chargebee_admin_page() {
-	$cboptions = get_option("chargebee");
+	global $cboptions; 
 
 	if($_SERVER['REQUEST_METHOD'] == "GET") { 
             return chargebee_wp_plugin::includeSiteSettings($cboptions);
@@ -209,7 +205,7 @@ static function chargebee_admin_page() {
         $cboptions = array_merge($cboptions, $cbsite_details); 
         $cboptions['default_plan'] = ""; 
         update_option("chargebee",$cboptions);
-        chargebee_wp_plugin::configure_chargebee_env();
+        chargebee_wp_plugin::init_chargebee();
         try {
                if( isset( $_POST["default_plan"]) && !empty($_POST["default_plan"]) ) {
 	            $result = ChargeBee_Plan::retrieve($_POST["default_plan"]);
@@ -260,7 +256,8 @@ static function check_for_comments($comments,$post_id = NULL) {
      $cbplans = get_post_meta($post_id, 'cb_post_plans', true);
      if( isset($cbplans['plans']) ) {
         $plans = $cbplans['plans'];
-        if( !is_user_logged_in() || ( isset($user->chargebee_plan) && !isset($plans[$user->chargebee_plan]) ) ) {  
+        $cb_current_plan = apply_filters("cb_get_user_plan",$user->ID);
+        if( !is_user_logged_in() || ( isset($cb_current_plan) && !isset($plans[$cb_current_plan]) ) ) {  
            // if the post is not accessible then making comments also inaccessible
             $comments = false;
         }
@@ -277,8 +274,7 @@ static function chargebee_access_metadata(){
 }
 
 static function chargebee_meta_box() {
-    $cboptions=get_option("chargebee");
-    global $post;
+    global $post, $cboptions; 
     $post_plans = get_post_meta($post->ID, 'cb_post_plans', true);
     $plans = isset($post_plans["plans"])? $post_plans["plans"] : null;
     $nonce_value = wp_create_nonce( plugin_basename(__FILE__) );
@@ -291,7 +287,6 @@ static function chargebee_save_user_meta($user_id) {
       $info = get_userdata( $user_id );
       $cboptions = get_option("chargebee");
       
-      update_user_meta($user_id, "cb_site", $cboptions['site_domain'] );
       // if default plan is not set then subscription will not be created when registering in WordPress.
       if( !isset($cboptions["default_plan"])) {
          return;
@@ -308,9 +303,10 @@ static function chargebee_save_user_meta($user_id) {
 				                   )
 			             ));
             do_action('cb_update_result', $result);
+            update_user_meta($user_id, "cb_site", $cboptions['site_domain'] );
        } catch ( ChargeBee_APIError $e ) {
-            // if any error is from ChargeBee setting the user plan to null.
-          update_user_meta($user_id, 'chargebee_plan', null);
+         $jsonError = $e->getJsonObject(); 
+         echo $jsonError["error_msg"];
        }
 }
 
@@ -346,12 +342,15 @@ static function chargebee_metabox_save($post_id) {
 }
 
 static function chargebee_check_access($posts) {
+    global $cboptions;
     $user = wp_get_current_user();
     if(isset($user->roles[0]) && $user->roles[0] == 'administrator') {
 	return $posts;
     }
-    $cboptions =get_option("chargebee");
+
     $cbsubscription = apply_filters("cb_get_subscription", $user->ID);
+    $cb_current_plan = apply_filters("cb_get_user_plan", $user->ID);
+
     foreach($posts as $k => $post) {
        $cbplans = get_post_meta($post->ID, 'cb_post_plans', true);
        if( isset($cbplans['plans']) && is_array($cbplans['plans']) ) {   // check posts has plan restriction
@@ -360,10 +359,9 @@ static function chargebee_check_access($posts) {
                  $post->post_content = $cboptions["not_logged_in_msg"];
            } else if( !(isset($cbsubscription)) ) {  // check chargebee subscription object in wp.
                  $post->post_content =  $cboptions["no_access_msg"];
-           } else if( isset($cbsubscription) && $cbsubscription->status == "cancelled" ) {  //check the subscription state in chargebee 
+           } else if( $cbsubscription->status == "cancelled" ) {  //check the subscription state in chargebee 
                   $post->post_content = $cboptions["cancel_msg"];
-           } else if( !(isset($user->chargebee_plan) && $user->chargebee_plan != ""
-                      && isset($plans[$user->chargebee_plan]) ) ) {  // check the user has subscribed to any plan and if it matches with post plan
+           } else if( !(isset($cb_current_plan) && isset($plans[$cb_current_plan])) ) {  // check the user has subscribed to any plan and if it matches with post plan
                   $post->post_content =  $cboptions["no_access_msg"];   
 	   }
         }

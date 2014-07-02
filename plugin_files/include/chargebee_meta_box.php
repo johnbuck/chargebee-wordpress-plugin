@@ -12,8 +12,8 @@
                    $isPlanFound = true;
                    $plan = $entry->plan(); ?> 
                    <input type='checkbox' name="cbplans[<?php echo $plan->id ?>]"
-                        value='<?php echo $plan->invoiceName ?>'  <?php echo ( isset($plans[$plan->id])  ?"checked":"") ?>  />   
-                   <?php echo $plan->invoiceName ?>
+                        value='<?php echo isset($plan->invoiceName) ? $plan->invoiceName : $plan->name ?>'  <?php echo ( isset($plans[$plan->id])  ?"checked":"") ?>  />   
+                   <?php echo isset($plan->invoiceName) ? $plan->invoiceName : $plan->name ?>
                    <?php echo ($plan->status =="archived" ? "(Archived Plan)" : "") ?>
                    <br>
                <?php } ?>
