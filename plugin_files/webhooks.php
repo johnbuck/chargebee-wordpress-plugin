@@ -14,15 +14,23 @@ class chargebee_webhook {
       $username = null;
       $password = null;
 
+
       if( isset($_SERVER['PHP_AUTH_USER'] ) ) {
            $username = $_SERVER['PHP_AUTH_USER'];
            $password = $_SERVER['PHP_AUTH_PW'];
-      }
+      }else {
+          parse_str($_SERVER["QUERY_STRING"]);
+     }
       try {
          if (is_null($username) || !($username==$cb_php_auth_user && $password == $cb_php_auth_pw) ) {
+            if($username != $cb_php_auth_user) { 
+               echo "\nUsername mismatch";
+            } 
+            if($password != $cb_php_auth_pw) { 
+               echo "\nPassword mismatch";
+            }
             header('HTTP/1.0 401 Unauthorized');
-            echo "401 Unauthorized";
-         } else {
+        } else {
             $content = file_get_contents('php://input'); 
             $webhook_content = ChargeBee_Event::deserialize($content); 
             chargebee_webhook::check_chargebee_id_present( $webhook_content->content());

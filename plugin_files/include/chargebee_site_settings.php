@@ -16,7 +16,7 @@
                https://<input type='text' name='cb[site_domain]' size='15' placeholder="acme" 
                          value='<?php echo isset($cboptions["site_domain"]) ? $cboptions["site_domain"] : "" ?>' />.chargebee.com
                <br>
-               <span class="description"> Your site name as registered in <a href="https://app.chargebee.com" target="_blank">ChargeBee</a>. If you dont have one, <a target="_blank" href="https://app.chargebee.com/signup"> sign up</a> for free. When testing configure your test site (eg: acme-test). </span>
+               <span class="description"> Your site name as registered in <a href="https://app.chargebee.com" target="_blank">ChargeBee</a>. If you dont have one, <a target="_blank" href="https://www.chargebee.com/trial-signup.html">sign up</a> for free. When testing configure your test site (eg: acme-test). </span>
            </td>
        </tr>
        <tr valign="top">

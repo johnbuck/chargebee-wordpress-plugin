@@ -1,14 +1,14 @@
 <?php
 /**
  * @package ChargeBee
- * @version 2.2
+ * @version 2.3
  */
 /*
  Plugin Name: ChargeBee
  Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
  Description: Manage Subscriptions From WordPress
  Author: ChargeBee
- Version: 2.2
+ Version: 2.3
  Author URI: https://www.chargebee.com
 */
 
@@ -63,7 +63,7 @@ static function install() {
                             'comment_status' => 'closed',
                             'ping_status' => 'closed' );
 
-         $plan_page_id = wp_insert_post($plan_page);
+         $plan_page_id = wp_insert_post($plan_page); 
          $cboptions = array(	'webhook_user_auth'=>"$AUTH_USER",
 			        'webhook_user_pass'=>"$AUTH_PASSWD",
                                 'plan_page' => $plan_page_id,
@@ -79,7 +79,6 @@ static function install() {
     } 
 }
 
-
 static function init_chargebee() {
   global $cboptions, $cb_user_meta;
   $cboptions = get_option("chargebee");
@@ -88,9 +87,9 @@ static function init_chargebee() {
   if( isset($cboptions["site_domain"]) && isset($cboptions["api_key"])) { 
      ChargeBee_Environment::configure($cboptions["site_domain"],$cboptions["api_key"]);
   }
-  apply_filters("cb_get_subscription", $user->ID);
-  apply_filters("cb_get_customer", $user->ID );
- 
+  $cb_subscriptions = apply_filters("cb_get_subscription", $user->ID);
+  $cb_customers = apply_filters("cb_get_customer", $user->ID );
+  
   if( isset($_GET) ) {
       if ( isset($_GET["chargebee_webhook_call"]) && $_GET["chargebee_webhook_call"] == "true" ) {  
          do_action("handle_webhook");
@@ -98,8 +97,12 @@ static function init_chargebee() {
       } else if ( isset($_GET["chargebee_checkout_redirection"]) && $_GET["chargebee_checkout_redirection"] == "true" ) {
          cb_hosted_page_redirect_handler(null);
          return;
-      } else if ( isset($_GET["chargebee_plan_id"]) && !empty($_GET["chargebee_plan_id"]) ) {
-         cb_checkout(array("cb_plan_id" => $_GET["chargebee_plan_id"])); 
+      } else if ( isset($_GET["chargebee_plan_id"]) && !empty($_GET["chargebee_plan_id"]) ) { 
+         if( isset($cb_subscriptions) && isset($cb_customers) && isset($cboptions['change_plan']) && $cboptions['change_plan'] == "via_customer_portal") {
+           cb_customer_portal(null); 
+         } else {
+          cb_checkout(array("cb_plan_id" => $_GET["chargebee_plan_id"])); 
+         }
          return; 
       } else if ( isset($_GET["chargebee_portal"]) && $_GET["chargebee_portal"] == "true" ) {
          cb_customer_portal(null); 
@@ -143,6 +146,9 @@ static function chargebee_admin_menu() {
                           'cb_page_settings', array("chargebee_wp_plugin","chargebee_page_menu") );
         add_submenu_page('chargebee.php', 'Plugin URLs & Short Codes', 'Plugin URLs & Short Codes','manage_options', 
                           'cb_short_codes', array("chargebee_wp_plugin","chargebee_urls") );
+        add_submenu_page('chargebee.php', 'Other Plugin Integrations', 'Other Plugin Integrations','manage_options', 
+                          'cb_other_plugin_integrations', array("chargebee_wp_plugin","chargebee_user_registration") );
+
 }
 
 static function includeSiteSettings($cboptions) {
@@ -157,9 +163,43 @@ static function chargebee_urls() {
      require_once(dirname(__FILE__) . "/include/chargebee_urls.php");
 }
 
+static function chargebee_user_registration() {
+  global $cboptions;
+  if($_SERVER['REQUEST_METHOD'] == "GET") {
+    return require_once(dirname(__FILE__) . "/include/chargebee_registration_settings.php");
+  }
+  if ( !isset( $_POST["nonce-cb-wordpress-action"] ) ||
+                     !wp_verify_nonce($_POST["nonce-cb-wordpress-action"], "wp-action-cb-plugin-page-setting" ) ) {
+      echo '<div class="error"><p><strong>Nonce did not match!</strong></p></div>';
+      return require_once(dirname(__FILE__) . "/include/chargebee_registration_settings.php");
+  }
+  $cb_reg_req = $_POST['cb'];
+  $msg = null;
+  if( isset($cb_reg_req['store_register_param']) && $cb_reg_req['store_register_param'] == "true" ) {
+    $msg = "From now the user registration fields will be recorded. Please do a sample registration and then stop recording registration field.";
+  } else { 
+    $msg = "Stopped capturing the user registration fields. Update your JSON accordingly from the last recorded registration fields.";
+  }
+
+  if( isset($cb_reg_req['cf_param_map']) ) {
+    $cb_reg_req = stripslashes_deep($_POST['cb']);
+    if( !is_null($cb_reg_req['cf_param_map']) && !empty($cb_reg_req['cf_param_map']) && json_decode($cb_reg_req['cf_param_map']) == null) {
+        echo '<div class="error"><p><strong>Invalid mapping JSON</strong></p></div>';
+        return require_once(dirname(__FILE__) . "/include/chargebee_registration_settings.php");
+    }
+    $cb_reg_req['cf_param_map'] = json_decode($cb_reg_req['cf_param_map']);
+    $msg = "Updated mapping JSON";
+  }
+
+  $cboptions = array_merge($cboptions, $cb_reg_req); 
+  update_option("chargebee", $cboptions);
+  echo '<div class="updated"><p><strong>'. $msg. '</strong></p></div>';
+  return require_once(dirname(__FILE__) . "/include/chargebee_registration_settings.php");
+}
+
+
 static function chargebee_page_menu() {
     global $cboptions; 
-    
     if($_SERVER['REQUEST_METHOD'] == "GET") {
       return chargebee_wp_plugin::includePageSettings($cboptions);
     }
@@ -170,7 +210,7 @@ static function chargebee_page_menu() {
     }
 
     $cbpage_settings = stripslashes_deep($_POST['cb']);
-    
+
     $cboptions = array_merge($cboptions, $cbpage_settings);
 
     update_option("chargebee",$cboptions);
@@ -286,21 +326,44 @@ static function chargebee_meta_box() {
 static function chargebee_save_user_meta($user_id) {
       $info = get_userdata( $user_id );
       $cboptions = get_option("chargebee");
-      
+      if( isset($cboptions['store_register_param']) && $cboptions['store_register_param'] == "true" ) {       
+        update_option("cb_user_register_param", $_POST); 
+      }
+  
       // if default plan is not set then subscription will not be created when registering in WordPress.
       if( !isset($cboptions["default_plan"])) {
          return;
       }
+      // adding custom fields from the request
+      $customer = array( "email" => "$info->user_email", 
+                         "firstName" => "$info->first_name", 
+                         "lastName" => "$info->last_name"
+                        );
+      if( isset($cboptions['cf_param_map']) ) {
+          foreach($cboptions['cf_param_map'] as $cf => $params) {
+             $req = $_POST;
+             $fields = explode(".",$params);
+             foreach($fields as $f) {
+               $req = $req[$f];
+             }
+             if( is_array($req) ) { 
+               if((bool)count(array_filter(array_keys($req), 'is_string')) ) { 
+                 $customer[$cf] = json_encode($req);
+               } else {
+                 $customer[$cf] = implode(",", $req);
+               } 
+             } else {
+               $customer[$cf] = json_encode($req);
+             }
+          }       
+      }
+
       try {
            // A subscription is created in ChargeBee with the default plan id.
            $result = ChargeBee_Subscription::create(array(
 	                            "id" => $user_id,
 			            "planId" => $cboptions["default_plan"], 
-				     "customer" => array(
-                                                   "email" => "$info->user_email", 
-			                           "firstName" => "$info->first_name", 
-				                   "lastName" => "$info->last_name"
-				                   )
+				    "customer" => $customer 
 			             ));
             do_action('cb_update_result', $result);
             update_user_meta($user_id, "cb_site", $cboptions['site_domain'] );

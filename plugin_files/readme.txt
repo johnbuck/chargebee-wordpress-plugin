@@ -1,20 +1,19 @@
 === ChargeBee ===
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
-Tested up to: 3.8.2 
-Stable tag: 2.2
+Stable tag: 2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The best recurring billing experience with paywall functionality to control accesss to webpage content on your WordPress site using ChargeBee's subscription billing platform.  
+The best recurring billing experience with paywall functionality to control accesss to webpage content on your WordPress site using ChargeBee.
 
 == Description ==
 
-A plugin to manage memberships on your WordPress site with ChargeBee.
+A plugin to manage memberships on your WordPress site with [ChargeBee](https://www.chargebee.com/).
 
 This plugin also helps publishers using WordPress to easily provide access/restrict content to subscribers using the plans configured in ChargeBee.
 
-ChargeBee manages the entire subscription life-cycle starting from trial to paid to canceled and also freemium users. The plugin automatically updates changes that happen in ChargeBee to WordPress. 
+[ChargeBee](https://www.chargebee.com/) manages the entire subscription life-cycle starting from trial to paid to canceled and also freemium users. The plugin automatically updates changes that happen in ChargeBee to WordPress. 
 
 It also connects your subscribers to ChargeBee's customer portal in case you want to provide them with the option to manage their account. This includes viewing past payments, updating card details and also canceling their subscriptions.
 
@@ -24,13 +23,19 @@ It also connects your subscribers to ChargeBee's customer portal in case you wan
 
 * The plugin acts as a paywall in resticting content to your users based on their pricing plans.
 * Provides the option to add customers to a default plan during signup.
+* Provides integration with other user registration plugins available in WordPress.
 * Changes that takes place to subscriptions in ChargeBee are updated in WordPress. These changes are updated using webhooks.
 * Connects to ChargeBee's customer portal for your users to easily access and manage their account and payment information.
+
 
 = Easy access to ChargeBee's features with URLs =
 
 The plugin includes URLs that can be used for specific functions such as changing an existing user's subscription to another plan and also to connect users to ChargeBee's customer portal. All this can be done within your WordPress site.
 
+= Easy integration with other user registration WordPress plugins =
+
+Additional information about the users can be passed to ChargeBee when a new user signups in your WordPress site.
+ 
 = Access users' ChargeBee meta information using filters =
 
 * apply_filter("cb_get_subscription", $user_id) - gives the user's subscription details present in ChargeBee. This will be in the [ChargeBee Subscription](https://apidocs.chargebee.com/docs/api/subscriptions?lang=php#subscription_attributes) object format.
@@ -76,7 +81,7 @@ Note: You can also install the plugin directly through your WordPress admin cons
 
 [youtube https://www.youtube.com/watch?v=xJZJ2O89xXw]
 
-1. A ChargeBee account. <a href="https://app.chargebee.com/signup" target="_blank">Signup</a> for a free trial if you don't have one.
+1. A ChargeBee account. <a href="https://www.chargebee.com/trial-signup.html" target="_blank">Signup</a> for a free trial if you don't have one.
 2. Configure your ChargeBee site name, API key and default plan.
 3. Copy the webhook and "Return & Cancel" URLs from WordPress and configure them in ChargeBee.
 
@@ -145,6 +150,8 @@ In order to invoke other APIs, just call the required API code from within WordP
 
 
 == Changelog ==
+= 2.3 =
+Added support for integrating with other user registration WordPress plugin.	
 
 = 2.2 =
 Updating ChargeBee user meta in WordPress after redirecting from customer portal, removed "chargebee plan" property, if invoice name is null then replace it will plan name and also added filters for developers to access the ChargeBee user meta information.
