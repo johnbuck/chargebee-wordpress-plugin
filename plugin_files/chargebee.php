@@ -1,14 +1,14 @@
 <?php
 /**
  * @package ChargeBee
- * @version 2.3
+ * @version 2.4
  */
 /*
  Plugin Name: ChargeBee
  Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
  Description: Manage Subscriptions From WordPress
  Author: ChargeBee
- Version: 2.3
+ Version: 2.4
  Author URI: https://www.chargebee.com
 */
 
@@ -89,7 +89,7 @@ static function init_chargebee() {
   }
   $cb_subscriptions = apply_filters("cb_get_subscription", $user->ID);
   $cb_customers = apply_filters("cb_get_customer", $user->ID );
-  
+
   if( isset($_GET) ) {
       if ( isset($_GET["chargebee_webhook_call"]) && $_GET["chargebee_webhook_call"] == "true" ) {  
          do_action("handle_webhook");
@@ -411,6 +411,7 @@ static function chargebee_check_access($posts) {
 	return $posts;
     }
 
+    $allowedChars = $cboptions["allowed_chars"];
     $cbsubscription = apply_filters("cb_get_subscription", $user->ID);
     $cb_current_plan = apply_filters("cb_get_user_plan", $user->ID);
 
@@ -419,13 +420,13 @@ static function chargebee_check_access($posts) {
        if( isset($cbplans['plans']) && is_array($cbplans['plans']) ) {   // check posts has plan restriction
            $plans = $cbplans['plans'];
            if( !is_user_logged_in() ) {
-                 $post->post_content = $cboptions["not_logged_in_msg"];
+                 $post->post_content = substr($post->post_content,0,$allowedChars) . $cboptions["not_logged_in_msg"];
            } else if( !(isset($cbsubscription)) ) {  // check chargebee subscription object in wp.
-                 $post->post_content =  $cboptions["no_access_msg"];
+                 $post->post_content =  substr($post->post_content,0,$allowedChars) . $cboptions["no_access_msg"];
            } else if( $cbsubscription->status == "cancelled" ) {  //check the subscription state in chargebee 
                   $post->post_content = $cboptions["cancel_msg"];
            } else if( !(isset($cb_current_plan) && isset($plans[$cb_current_plan])) ) {  // check the user has subscribed to any plan and if it matches with post plan
-                  $post->post_content =  $cboptions["no_access_msg"];   
+                  $post->post_content =  substr($post->post_content,0,$allowedChars) .  $cboptions["no_access_msg"];   
 	   }
         }
     }

@@ -36,8 +36,8 @@
      </td> 
   </tr>
  </table>
- <br/>
- <h2>Plan Page Settings </h2> 
+<br/>
+ <h2> Page Settings </h2> 
  <hr>
  <div class="description"> 
  </div>
@@ -54,6 +54,18 @@
      <span class="description"> The page where all your available plans are listed. </span>
   </td>
  </tr> 
+ <tr scope="row" valign="top">
+   <th scope="row" valign="top">
+      <label for="cb[login_page]"> Login Page  </label>
+   </th>
+   <td>
+     <?php
+       wp_dropdown_pages(array("name"=>"cb[login_page]", "show_option_none"=>"-- Choose One --" , 
+                               "selected" => isset($cboptions["login_page"]) ? $cboptions["login_page"] : ""));
+     ?> <br/>
+     <span class="description"> Select your login page. If no login page selected then the users will be redirected to WordPress login page.   </span>
+  </td>
+ </tr> 
  <?php if( isset($cboptions['plan_page_generated']) && $cboptions['plan_page_generated'] == "true" ) { ?>
  <tr valign="top">
     <th scope="row">
@@ -67,10 +79,25 @@
    </tr>
  <?php } ?>
 </table>
-<h2>Display Messages</h2> 
+  <br/>
+ <h2> Allowed Characters </h2> 
+ <hr>
+<table class="form-table">
+ <tr scope="row" valign="top">
+   <th scope="row" valign="top">
+      <label for="allowed_chars"> Allowed Characters  </label>
+   </th>
+   <td>
+      <input type="text" name="cb[allowed_chars]" value="<?php echo htmlspecialchars($cboptions["allowed_chars"]) ?>" />
+      <br/>
+     <span class="description"> Specify first set of number of characters to be displayed in each post. If left empty, no characters will be shown for the restricted post. </span>
+  </td>
+ </tr> 
+</table>
+ <h2>Display Messages</h2> 
 <h4>  Messages displayed during plan change </h4> 
 <hr/>
-<table class="form-table">
+<table class="form-table">  <tr valign="top">
    <tr valign="top">
             <th scope="row">
                    <label for="cb[checkout_success_msg]"> Success Message </label>

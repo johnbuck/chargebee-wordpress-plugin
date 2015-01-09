@@ -4,7 +4,7 @@ class ChargeBee_Subscription extends ChargeBee_Model
 {
 
   protected $allowed = array('id', 'planId', 'planQuantity', 'status', 'startDate', 'trialStart', 'trialEnd',
-'currentTermStart', 'currentTermEnd', 'remainingBillingCycles', 'createdAt', 'startedAt', 'activatedAt','cancelledAt', 'cancelReason', 'dueInvoicesCount', 'dueSince', 'totalDues', 'addons', 'coupon','coupons', 'shippingAddress');
+'currentTermStart', 'currentTermEnd', 'remainingBillingCycles', 'createdAt', 'startedAt', 'activatedAt','cancelledAt', 'cancelReason', 'affiliateToken', 'createdFromIp', 'dueInvoicesCount', 'dueSince','totalDues', 'addons', 'coupon', 'coupons', 'shippingAddress', 'hasScheduledChanges');
 
 
 
@@ -36,6 +36,16 @@ class ChargeBee_Subscription extends ChargeBee_Model
     return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("subscriptions",$id), array(), $env);
   }
 
+  public static function retrieveWithScheduledChanges($id, $env = null)
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("subscriptions",$id,"retrieve_with_scheduled_changes"), array(), $env);
+  }
+
+  public static function removeScheduledChanges($id, $env = null)
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"remove_scheduled_changes"), array(), $env);
+  }
+
   public static function update($id, $params = array(), $env = null)
   {
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id), $params, $env);
@@ -56,9 +66,14 @@ class ChargeBee_Subscription extends ChargeBee_Model
     return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"reactivate"), $params, $env);
   }
 
-  public static function addCredit($id, $params, $env = null)
+  public static function addChargeAtTermEnd($id, $params, $env = null)
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"add_credit"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"add_charge_at_term_end"), $params, $env);
+  }
+
+  public static function chargeAddonAtTermEnd($id, $params, $env = null)
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("subscriptions",$id,"charge_addon_at_term_end"), $params, $env);
   }
 
  }

@@ -3,10 +3,10 @@
  * To carry out checkout process, redirect url should be configured at ChargeBee settings page.
  */
 try { 
- $url = null;
+ $cboptions = get_option("chargebee");
  if( is_user_logged_in() ) {
+   $url = null;
    $user = wp_get_current_user();
-   $cboptions = get_option("chargebee");
    $cb_customer = apply_filters("cb_get_customer", $user->ID);
    $cb_subscription = apply_filters("cb_get_subscription", $user->ID);
    $checkout_existing = False;
@@ -43,8 +43,11 @@ try {
    }
  } else {
    // if customer not logged in then redirecting him to login page.
-   $url = wp_login_url();
-   redirect_to_url($url);
+   if( isset($cboptions["login_page"]) && !empty($cboptions["login_page"])) {
+     redirect_to_url(get_permalink($cboptions["login_page"]));
+   } else {
+     redirect_to_url(wp_login_url());
+   }
  }
 } catch(ChargeBee_APIError $e) {
   echo  "<div class='cb-flash'><span class='cb-text-failure'>Couldn't change your subscription. Please contact site owner.</span></div>";

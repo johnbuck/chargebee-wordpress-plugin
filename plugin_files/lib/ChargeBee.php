@@ -33,7 +33,12 @@ abstract class ChargeBee
 require(dirname(__FILE__) . '/ChargeBee/Version.php');
 require(dirname(__FILE__) . '/ChargeBee/Environment.php');
 require(dirname(__FILE__) . '/ChargeBee/Util.php');
-require(dirname(__FILE__) . '/ChargeBee/APIError.php');
+
+require(dirname(__FILE__) . '/ChargeBee/Exceptions/IOException.php');
+require(dirname(__FILE__) . '/ChargeBee/Exceptions/APIError.php');
+require(dirname(__FILE__) . '/ChargeBee/Exceptions/PaymentException.php');
+require(dirname(__FILE__) . '/ChargeBee/Exceptions/OperationFailedException.php');
+require(dirname(__FILE__) . '/ChargeBee/Exceptions/InvalidRequestException.php');
 
 require(dirname(__FILE__) . '/ChargeBee/Request.php');
 require(dirname(__FILE__) . '/ChargeBee/Curl.php');
@@ -49,6 +54,7 @@ require(dirname(__FILE__) . '/ChargeBee/Models/SubscriptionCoupon.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/SubscriptionShippingAddress.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Customer.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/CustomerBillingAddress.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/CustomerPaymentMethod.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Card.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Address.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Invoice.php');
@@ -56,6 +62,8 @@ require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceLineItem.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceDiscount.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceTax.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceLinkedTransaction.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/Order.php');
+require(dirname(__FILE__) . '/ChargeBee/Models/InvoiceLinkedOrder.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/Estimate.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/EstimateLineItem.php');
 require(dirname(__FILE__) . '/ChargeBee/Models/EstimateDiscount.php');

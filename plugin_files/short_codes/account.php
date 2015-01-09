@@ -2,8 +2,13 @@
 /*
  * Creates a ChargeBee Customer Portal link and redirects the customer to their ChargeBee Customer Portal Page. 
  */
+global $cboptions;
 if( !is_user_logged_in() ) {
-  redirect_to_url(wp_login_url());  
+  if( isset($cboptions["login_page"]) && !empty($cboptions["login_page"])) {      
+    redirect_to_url(get_permalink($cboptions["login_page"]));  
+  } else {
+    redirect_to_url(wp_login_url());  
+  }
 }
 $user = wp_get_current_user();
 $cb_subscription = apply_filters("cb_get_subscription", $user->ID);

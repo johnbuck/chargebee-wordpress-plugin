@@ -1,7 +1,7 @@
 === ChargeBee ===
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
-Stable tag: 2.3
+Stable tag: 2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -150,6 +150,9 @@ In order to invoke other APIs, just call the required API code from within WordP
 
 
 == Changelog ==
+= 2.4 =
+Support for showing specified number of characters for a restricted post and also redirecting user to custom login page when try to choose a plan without logging in site.  
+
 = 2.3 =
 Added support for integrating with other user registration WordPress plugin.	
 
@@ -170,6 +173,11 @@ Initial version of ChargeBee plugin.
 
 
 == Upgrade Notice ==
+= 2.4 =
+Support for showing specified number of characters for a restricted post and also redirecting user to custom login page when try to choose a plan without logging in site.  
+
+= 2.3 =
+Added support for integrating with other user registration WordPress plugin.	
 
 = 2.2 =
 Updating ChargeBee user meta in WordPress after redirecting from customer portal, removed "chargebee plan" property, if invoice name is null then replace it will plan name and also added filters for developers to access the ChargeBee user meta information.
