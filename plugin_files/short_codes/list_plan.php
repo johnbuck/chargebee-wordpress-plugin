@@ -81,7 +81,7 @@ function plan_description($plan, $currency) {
 function plan_price($plan, $currency) {
 
   if( isset($plan->price) && $plan->price != 0 ) {
-    return $currency . " " . number_format($plan->price/100, 2, '.', '') . ($plan->period == 1 ? ' per' : ' for ' .$plan->period) .' '. $plan->periodUnit ;
+    return $currency . " " . number_format($plan->price/100, 2, '.', '') . ($plan->period == 1 ? ' per ' . $plan->periodUnit : ' for ' .$plan->period . ' '. $plan->periodUnit . 's');
   } else {
     if( isset($plan->setupCost) && $plan->setupCost != 0 ) {
       return "Only setup Charge";
