@@ -1,14 +1,14 @@
 <?php
 /**
  * @package ChargeBee
- * @version 2.4
+ * @version 2.4.1
  */
 /*
  Plugin Name: ChargeBee
  Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
  Description: Manage Subscriptions From WordPress
  Author: ChargeBee
- Version: 2.4
+ Version: 2.4.1
  Author URI: https://www.chargebee.com
 */
 
@@ -38,7 +38,6 @@ add_action('admin_enqueue_scripts', array("chargebee_wp_plugin","chargebee_admin
 
 add_filter("comments_array", array("chargebee_wp_plugin","check_for_comments"));
 add_filter("comments_open", array("chargebee_wp_plugin","check_for_comments"));
-
 
 class chargebee_wp_plugin {
 
@@ -78,6 +77,7 @@ static function install() {
         add_option("chargebee",$cboptions);
     } 
 }
+
 
 static function init_chargebee() {
   global $cboptions, $cb_user_meta;

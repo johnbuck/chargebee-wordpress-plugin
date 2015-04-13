@@ -1,7 +1,7 @@
 === ChargeBee ===
 Contributors: ChargeBee
 Tags: memberships, membership,subscription,recurring billing, ecommerce, paywall, restrict access, restrict content, authorize.net, paypal, stripe, braintree
-Stable tag: 2.4
+Stable tag: 2.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -150,6 +150,10 @@ In order to invoke other APIs, just call the required API code from within WordP
 
 
 == Changelog ==
+
+= 2.4.1 = 
+Minor bug fix. In plan listing page for premium plans, plan period has been skipped and now it is fixed 
+
 = 2.4 =
 Support for showing specified number of characters for a restricted post and also redirecting user to custom login page when try to choose a plan without logging in site.  
 
@@ -173,6 +177,10 @@ Initial version of ChargeBee plugin.
 
 
 == Upgrade Notice ==
+
+= 2.4.1 = 
+Minor bug fix. In plan listing page for premium plans, plan period has been skipped and now it is fixed 
+
 = 2.4 =
 Support for showing specified number of characters for a restricted post and also redirecting user to custom login page when try to choose a plan without logging in site.  
 

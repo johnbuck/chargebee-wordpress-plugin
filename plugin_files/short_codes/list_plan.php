@@ -27,7 +27,7 @@ try {
             }
             $is_current_plan = isset($cb_current_plan) && $cb_current_plan== $plan->id ?>  
             <tr class="<?php echo $is_current_plan ? "cb-current-plan": "" ?>">
-	         <td> <?php echo isset($plan->invoiceName) ? $plan->invoiceName : $plan->name ?> </td>
+	         <td> <?php echo  isset($plan->invoiceName) ? $plan->invoiceName : $plan->name ?> </td>
 	         <td> <?php echo plan_description($plan, $cboptions["currency"]) ?> </td>
 	         <td> <?php echo plan_price($plan, $cboptions["currency"]) ?> </td>
 		 <td> <?php if( $is_current_plan) { ?> 
@@ -81,7 +81,7 @@ function plan_description($plan, $currency) {
 function plan_price($plan, $currency) {
 
   if( isset($plan->price) && $plan->price != 0 ) {
-    return $currency . " " . number_format($plan->price/100, 2, '.', '') . " per " . $plan->periodUnit ;
+    return $currency . " " . number_format($plan->price/100, 2, '.', '') . ($plan->period == 1 ? ' per' : ' for ' .$plan->period) .' '. $plan->periodUnit ;
   } else {
     if( isset($plan->setupCost) && $plan->setupCost != 0 ) {
       return "Only setup Charge";
