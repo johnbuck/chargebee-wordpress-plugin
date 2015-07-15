@@ -61,7 +61,7 @@ class chargebee_webhook {
           }
       }
 
-      if($fetch) {
+      if($fetch && $content->subscription() != null ) {
          $result = ChargeBee_Subscription::retrieve($content->subscription()->id);
          update_user_meta($result->customer()->id, 'subscription', $result->subscription());
          update_user_meta($result->customer()->id, 'customer', $result->customer());

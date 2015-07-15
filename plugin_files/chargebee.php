@@ -1,14 +1,14 @@
 <?php
 /**
  * @package ChargeBee
- * @version 2.4.1
+ * @version 2.4.2
  */
 /*
  Plugin Name: ChargeBee
  Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
  Description: Manage Subscriptions From WordPress
  Author: ChargeBee
- Version: 2.4.1
+ Version: 2.4.2
  Author URI: https://www.chargebee.com
 */
 

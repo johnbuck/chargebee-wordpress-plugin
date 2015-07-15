@@ -43,11 +43,17 @@ try {
    }
  } else {
    // if customer not logged in then redirecting him to login page.
+   $login_url = wp_login_url();
    if( isset($cboptions["login_page"]) && !empty($cboptions["login_page"])) {
-     redirect_to_url(get_permalink($cboptions["login_page"]));
-   } else {
-     redirect_to_url(wp_login_url());
+     $login_url = get_permalink($cboptions["login_page"]);
    }
+   $referer = $_SERVER['HTTP_REFERER'];
+   if(is_null($referer) || strpos($referer,get_site_url()) === false ){
+	   $login_url .= "?redirect_to=" . get_site_url();
+   } else {
+	   $login_url .= "?redirect_to=" . $_SERVER['HTTP_REFERER'];
+   }
+   redirect_to_url($login_url);
  }
 } catch(ChargeBee_APIError $e) {
   echo  "<div class='cb-flash'><span class='cb-text-failure'>Couldn't change your subscription. Please contact site owner.</span></div>";
