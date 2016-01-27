@@ -108,6 +108,27 @@ ChargeBee's customer portal can also be linked to your WordPress site to allow u
 
 ##Changelog
 
+##2.4.3
+Icon and text changes
+
+##2.4.2
+Redirection after logging in has been handled, if the customer comes clicking checkout from plan pricing page and also events without subscription object webhook call were failing has been handled
+
+##2.4.1
+Minor bug fix. In plan listing page for premium plans, plan period has been skipped and now it is fixed
+
+##2.4
+Support for showing specified number of characters for a restricted post and also redirecting user to custom login page when try to choose a plan without logging in site.
+
+##2.3
+Added support for integrating with other user registration WordPress plugin.
+
+##2.2
+Updating Chargebee user meta in WordPress after redirecting from customer portal, removed "chargebee plan" property, if invoice name is null then replace it will plan name and also added filters for developers to access the Chargebee user meta information.
+
+##2.1
+Short code had been added to show custom messages based on the user plan
+
 ##2.0
 Option for customer to view the available plans and to switch their plan by themselves. Customers can use the ChargeBee hosted page and customer portal feature.
 ##1.1
@@ -118,6 +139,27 @@ Initial version of ChargeBee plugin.
 
 
 ##Upgrade Notice
+
+##2.4.3
+Icon and text changes
+
+##2.4.2
+Redirection after logging in has been handled, if the customer comes clicking checkout from plan pricing page and also events without subscription object webhook call were failing has been handled
+
+##2.4.1
+Minor bug fix. In plan listing page for premium plans, plan period has been skipped and now it is fixed
+
+##2.4
+Support for showing specified number of characters for a restricted post and also redirecting user to custom login page when try to choose a plan without logging in site.
+
+##2.3
+Added support for integrating with other user registration WordPress plugin.
+
+##2.2
+Updating Chargebee user meta in WordPress after redirecting from customer portal, removed "chargebee plan" property, if invoice name is null then replace it will plan name and also added filters for developers to access the Chargebee user meta information.
+
+##2.1
+Short code had been added to show custom messages based on the user plan
 
 ##2.0
 Option for customer to view the available plans and to switch their plan by themselves. Customers can use the ChargeBee hosted page and customer portal feature.

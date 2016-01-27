@@ -2,9 +2,9 @@
 <h2> Integration with user registration Plugins </h2>
 <hr>
 <div class="description">
-ChargeBee plugin integrates with other wordpress plugins that offer user registration. Thus, when a user signs up, a new subscription gets created for your default plan and also allows you to send additional user information to ChargeBee.
+Chargebee plugin integrates with other wordpress plugins that offer user registration. Thus, when a user signs up, a new subscription gets created for your default plan and also allows you to send additional user information to Chargebee.
 <br/>
-<strong>Note: </strong> By default, this plugin sends the customer's first name, last name and email that's saved in WordPress as customer information to ChargeBee.
+<strong>Note: </strong> By default, this plugin sends the customer's first name, last name and email that's saved in WordPress as customer information to Chargebee.
 <br/><br/>
 To complete this integration, please follow the steps given below -
 <div>
@@ -37,18 +37,18 @@ To complete this integration, please follow the steps given below -
  	<input type="submit" <?php echo $store_register_param? "":"disabled "?> value="Stop capturing" class="button-primary"/>
   </form>
 </div>
- <h4>5. Provide the mapping JSON as input with key as ChargeBee customer attribute and value as the field name captured in sample registration </h4>
+ <h4>5. Provide the mapping JSON as input with key as Chargebee customer attribute and value as the field name captured in sample registration </h4>
 <div class="description">
-	To send additional user information to ChargeBee, please provide input as JSON with key as <a href="https://apidocs.chargebee.com/docs/api/customers#customer_attributes" target="_blank">ChargeBee customer attribute</a> and value as field name captured in sample registration. The JSON maps the ChargeBee customer attribute with the user registration field.<br/> <br/>
+	To send additional user information to Chargebee, please provide input as JSON with key as <a href="https://apidocs.chargebee.com/docs/api/customers#customer_attributes" target="_blank">Chargebee customer attribute</a> and value as field name captured in sample registration. The JSON maps the Chargebee customer attribute with the user registration field.<br/> <br/>
 <strong>Syntax:</strong>
 <pre>
 {
-  "ChargeBee customer attribute 1" : "&lt;field name 1 used in user registration form&gt;",
-  "ChargeBee customer attribute 2" : "&lt;field name 2 used in user registeration form&gt;"
+  "Chargebee customer attribute 1" : "&lt;field name 1 used in user registration form&gt;",
+  "Chargebee customer attribute 2" : "&lt;field name 2 used in user registeration form&gt;"
 }
 </pre>
 <strong>Example:</strong> <br/>
-		In the following sample mapping JSON - "first_name" and "phone" is a ChargeBee customer attribute and "param_first_name" and "param_phone" is the field name used in the user registration form. This mapping JSON will add first name and phone value to the customer created in ChargeBee.   <br/> 
+		In the following sample mapping JSON - "first_name" and "phone" is a Chargebee customer attribute and "param_first_name" and "param_phone" is the field name used in the user registration form. This mapping JSON will add first name and phone value to the customer created in Chargebee.   <br/> 
 <pre>
 {
   "first_name" : "param_first_name",

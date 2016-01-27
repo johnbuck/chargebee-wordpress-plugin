@@ -15,7 +15,7 @@ add_filter('cb_get_customer', array("chargebee_meta", "chargebee_customer_detail
 class chargebee_meta {
 
 /*
- * Gets the ChargeBee Subscription object of the user_id passed, if present at the wp_uermeta table.
+ * Gets the Chargebee Subscription object of the user_id passed, if present at the wp_uermeta table.
  */
 static function chargebee_subscription_detail($userId) {
     global $cb_user_meta;
@@ -34,7 +34,7 @@ static function chargebee_subscription_detail($userId) {
 }
 
 /*
- * Gets the ChargeBee Customer object of the user_id passed, if present at the wp_usermeta table.
+ * Gets the Chargebee Customer object of the user_id passed, if present at the wp_usermeta table.
  */
 static function chargebee_customer_detail($userId) {
     global $cb_user_meta;
@@ -54,8 +54,8 @@ static function chargebee_customer_detail($userId) {
 
 /*
  * Updates the subscription and customer object for the user
- * from the ChargeBee result object.
- * Here wordpress user_id, ChargeBee subscription id and ChargeBee customer id are same.
+ * from the Chargebee result object.
+ * Here wordpress user_id, Chargebee subscription id and Chargebee customer id are same.
  */
 static function chargebee_update_from_result($response) {
   global $cb_user_meta;
@@ -73,7 +73,7 @@ static function chargebee_update_from_result($response) {
 }
 
 /*
- * Get the user current plan in ChargeBee.
+ * Get the user current plan in Chargebee.
  * 
  */
 static function chargebee_user_plan($user_id) {
@@ -85,7 +85,7 @@ static function chargebee_user_plan($user_id) {
 }
 
 /*
- * Get the user subscription state in ChargeBee.
+ * Get the user subscription state in Chargebee.
  */
 static function chargebee_user_status($user_id) {
  $cb_subscription = apply_filters("cb_get_subscription",$user_id);   
@@ -96,7 +96,7 @@ static function chargebee_user_status($user_id) {
 }
 
 /* 
- * Do a sync of users' subscription and customer meta in WordPress from ChargeBee. 
+ * Do a sync of users' subscription and customer meta in WordPress from Chargebee. 
  */
 static function chargebee_sync_sub_and_cust($user_id) {
  if( $user_id == 0 ) {

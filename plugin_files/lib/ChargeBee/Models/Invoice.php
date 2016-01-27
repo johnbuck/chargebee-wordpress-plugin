@@ -3,67 +3,97 @@
 class ChargeBee_Invoice extends ChargeBee_Model
 {
 
-  protected $allowed = array('id', 'customerId', 'subscriptionId', 'recurring', 'status', 'vatNumber', 'startDate',
-'endDate', 'amount', 'paidOn', 'nextRetry', 'subTotal', 'tax', 'lineItems', 'discounts', 'taxes','linkedTransactions', 'linkedOrders');
+  protected $allowed = array('id', 'poNumber', 'customerId', 'subscriptionId', 'recurring', 'status', 'vatNumber',
+'priceType', 'startDate', 'endDate', 'amount', 'amountDue', 'paidOn', 'dunningStatus', 'nextRetry','subTotal', 'tax', 'firstInvoice', 'currencyCode', 'lineItems', 'discounts', 'taxes', 'linkedTransactions','linkedOrders', 'notes', 'shippingAddress', 'billingAddress');
 
 
 
   # OPERATIONS
   #-----------
 
-  public static function charge($params, $env = null)
+  public static function create($params, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices","charge"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices"), $params, $env, $headers);
   }
 
-  public static function chargeAddon($params, $env = null)
+  public static function charge($params, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices","charge_addon"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices","charge"), $params, $env, $headers);
   }
 
-  public static function all($params = array(), $env = null)
+  public static function chargeAddon($params, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("invoices"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices","charge_addon"), $params, $env, $headers);
   }
 
-  public static function invoicesForCustomer($id, $params = array(), $env = null)
+  public static function stopDunning($id, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("customers",$id,"invoices"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"stop_dunning"), array(), $env, $headers);
   }
 
-  public static function invoicesForSubscription($id, $params = array(), $env = null)
+  public static function all($params = array(), $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("subscriptions",$id,"invoices"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("invoices"), $params, $env, $headers);
   }
 
-  public static function retrieve($id, $env = null)
+  public static function invoicesForCustomer($id, $params = array(), $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("invoices",$id), array(), $env);
+    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("customers",$id,"invoices"), $params, $env, $headers);
   }
 
-  public static function pdf($id, $env = null)
+  public static function invoicesForSubscription($id, $params = array(), $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"pdf"), array(), $env);
+    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("subscriptions",$id,"invoices"), $params, $env, $headers);
   }
 
-  public static function addCharge($id, $params, $env = null)
+  public static function retrieve($id, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"add_charge"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::GET, ChargeBee_Util::encodeURIPath("invoices",$id), array(), $env, $headers);
   }
 
-  public static function addAddonCharge($id, $params, $env = null)
+  public static function pdf($id, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"add_addon_charge"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"pdf"), array(), $env, $headers);
   }
 
-  public static function collect($id, $env = null)
+  public static function addCharge($id, $params, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"collect"), array(), $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"add_charge"), $params, $env, $headers);
   }
 
-  public static function refund($id, $params = array(), $env = null)
+  public static function addAddonCharge($id, $params, $env = null, $headers = array())
   {
-    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"refund"), $params, $env);
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"add_addon_charge"), $params, $env, $headers);
+  }
+
+  public static function collect($id, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"collect"), array(), $env, $headers);
+  }
+
+  public static function collectPayment($id, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"collect_payment"), array(), $env, $headers);
+  }
+
+  public static function refund($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"refund"), $params, $env, $headers);
+  }
+
+  public static function recordRefund($id, $params, $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"record_refund"), $params, $env, $headers);
+  }
+
+  public static function voidInvoice($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"void"), $params, $env, $headers);
+  }
+
+  public static function delete($id, $params = array(), $env = null, $headers = array())
+  {
+    return ChargeBee_Request::send(ChargeBee_Request::POST, ChargeBee_Util::encodeURIPath("invoices",$id,"delete"), $params, $env, $headers);
   }
 
  }

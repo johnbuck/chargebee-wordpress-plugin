@@ -1,14 +1,14 @@
 <?php
 /**
- * @package ChargeBee
+ * @package Chargebee
  * @version 2.4.2
  */
 /*
- Plugin Name: ChargeBee
+ Plugin Name: Chargebee
  Plugin URI: https://github.com/chargebee/chargebee-wordpress-plugin
  Description: Manage Subscriptions From WordPress
- Author: ChargeBee
- Version: 2.4.2
+ Author: Chargebee
+ Version: 2.4.3
  Author URI: https://www.chargebee.com
 */
 
@@ -138,7 +138,7 @@ static function chargebee_admin_assets() {
 }
 
 static function chargebee_admin_menu() {
-	add_menu_page('ChargeBee', 'ChargeBee', 'manage_options', 'chargebee.php', 
+	add_menu_page('Chargebee', 'Chargebee', 'manage_options', 'chargebee.php', 
                            array("chargebee_wp_plugin","chargebee_admin_page"), WP_PLUGIN_URL . "/chargebee/cb-fav.png" );
 	add_submenu_page('chargebee.php', 'Site Settings', 'Site Settings', 'manage_options', 'chargebee.php', 
                            array("chargebee_wp_plugin","chargebee_admin_page") );
@@ -268,7 +268,7 @@ static function chargebee_admin_page() {
             } else if( $jsonError['error_code'] == "api_authentication_invalid_key") {
                echo '<div class="error"><p><strong>API key Invalid</strong></p></div>';   
             } else if( $jsonError['error_code'] == "resource_not_found" ) { 
-	       echo '<div class="error"><p><strong> Plan not found in ChargeBee </strong></p></div>';
+	       echo '<div class="error"><p><strong> Plan not found in Chargebee </strong></p></div>';
             } else {  
                echo '<div class="error"><p><strong>'. $jsonError['error_msg'] .' </strong></p></div>';
             }
@@ -307,9 +307,9 @@ static function check_for_comments($comments,$post_id = NULL) {
 }
 
 static function chargebee_access_metadata(){
-    add_meta_box( 'chargebee-meta-box', 'ChargeBee Access Control', 
+    add_meta_box( 'chargebee-meta-box', 'Chargebee Access Control', 
                   array('chargebee_wp_plugin','chargebee_meta_box'), 'post', 'normal', 'high' );
-    add_meta_box( 'chargebee-meta-box', 'ChargeBee Access Control', 
+    add_meta_box( 'chargebee-meta-box', 'Chargebee Access Control', 
                   array('chargebee_wp_plugin','chargebee_meta_box'), 'page', 'normal', 'high' );
 }
 
@@ -359,7 +359,7 @@ static function chargebee_save_user_meta($user_id) {
       }
 
       try {
-           // A subscription is created in ChargeBee with the default plan id.
+           // A subscription is created in Chargebee with the default plan id.
            $result = ChargeBee_Subscription::create(array(
 	                            "id" => $user_id,
 			            "planId" => $cboptions["default_plan"], 

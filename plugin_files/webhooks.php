@@ -34,7 +34,7 @@ class chargebee_webhook {
             $content = file_get_contents('php://input'); 
             $webhook_content = ChargeBee_Event::deserialize($content); 
             chargebee_webhook::check_chargebee_id_present( $webhook_content->content());
-            echo "Webhook from ChargeBee processed";
+            echo "Webhook from Chargebee processed";
          }
       } catch( Exception $e) {
          header('HTTP/1.0 500 Internal Server error');

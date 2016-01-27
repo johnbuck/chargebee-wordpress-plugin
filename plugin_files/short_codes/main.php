@@ -15,7 +15,7 @@ function cb_listing_plans($atts) {
 }
 
 /*
- * Short code takes to ChargeBee Checkout page for the specified plan id.
+ * Short code takes to Chargebee Checkout page for the specified plan id.
  */
 function cb_checkout($atts) {
         $cb_plan_id = $atts["cb_plan_id"]; 
@@ -32,7 +32,7 @@ function cb_hosted_page_redirect_handler($atts) {
 
 
 /*
- * Short codes that redirects the customer to the ChargeBee Single Sign on Customer Portal page. 
+ * Short codes that redirects the customer to the Chargebee Single Sign on Customer Portal page. 
  */
 function cb_customer_portal($atts) {
     include(dirname(__FILE__) . "/account.php");

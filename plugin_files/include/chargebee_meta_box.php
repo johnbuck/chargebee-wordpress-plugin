@@ -25,7 +25,7 @@
                   }  ?>
            <?php } 
            if( !$isPlanFound ) { ?>
-               <div> No Plans found in your ChargeBee site</div>
+               <div> No Plans found in your Chargebee site</div>
           <?php } 
         } catch( ChargeBee_APIError $e) { 
             $jsonError = $e->getJsonObject();   

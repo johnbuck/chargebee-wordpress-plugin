@@ -1,6 +1,6 @@
 <?php
 /*
- * Handles the redirection from ChargeBee after checkout using ChargeBee Hosted Page.
+ * Handles the redirection from Chargebee after checkout using Chargebee Hosted Page.
  */
 //$cboptions = get_option("chargebee");
 global $cboptions;

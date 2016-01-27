@@ -1,6 +1,6 @@
 <?php
 /*
- * Creates a ChargeBee Customer Portal link and redirects the customer to their ChargeBee Customer Portal Page. 
+ * Creates a Chargebee Customer Portal link and redirects the customer to their Chargebee Customer Portal Page. 
  */
 global $cboptions;
 if( !is_user_logged_in() ) {

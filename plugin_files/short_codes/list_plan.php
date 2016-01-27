@@ -52,7 +52,7 @@ try {
   </table>
   <?php 
     if (is_admin() ) { ?>
-      <div class="cb-text-failure"> Couldnt find any plans in your ChargeBee site </div> 
+      <div class="cb-text-failure"> Couldnt find any plans in your Chargebee site </div> 
    <?php } else { ?>
       <div class="cb-text-failure"> No plan found </div> 
 <?php } 

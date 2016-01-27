@@ -20,7 +20,7 @@
    </th>
    <td>
      <strong>Using the Plan Listing page</strong> <br/>
-     <span class="description"> When users try to change their plan, we check if a subscription already exists in ChargeBee and if a card is present. If they are, then the selected plan will be updated, otherwise a new subscription will be created with the selected plan. <br/>
+     <span class="description"> When users try to change their plan, we check if a subscription already exists in Chargebee and if a card is present. If they are, then the selected plan will be updated, otherwise a new subscription will be created with the selected plan. <br/>
    </span>
    </td>
  </tr>
@@ -29,9 +29,9 @@
        <input type='radio' name='cb[change_plan]' value='via_customer_portal'  <?php echo $customer_portal  ?>/> 
      </th>
      <td>
-        <strong>Using ChargeBee's Customer Portal</strong> <br/>
+        <strong>Using Chargebee's Customer Portal</strong> <br/>
         <span class='description'> 
-                  When users try to change their plan using the "Change Plan URL", they will be taken to ChargeBee's customer portal. This is only supported for customers who have a subscription in ChargeBee. So if you're using this option, ensure that you've specified a default plan under "Site Settings".
+                  When users try to change their plan using the "Change Plan URL", they will be taken to Chargebee's customer portal. This is only supported for customers who have a subscription in Chargebee. So if you're using this option, ensure that you've specified a default plan under "Site Settings".
         </span>
      </td> 
   </tr>

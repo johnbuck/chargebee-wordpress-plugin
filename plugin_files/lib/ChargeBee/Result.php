@@ -32,7 +32,7 @@ class ChargeBee_Result
     function invoice() 
     {
         return $this->_get('invoice', 'ChargeBee_Invoice', 
-        array('line_items' => 'ChargeBee_InvoiceLineItem', 'discounts' => 'ChargeBee_InvoiceDiscount', 'taxes' => 'ChargeBee_InvoiceTax', 'invoice_transactions' => 'ChargeBee_InvoiceLinkedTransaction', 'orders' => 'ChargeBee_InvoiceLinkedOrder'));
+        array('line_items' => 'ChargeBee_InvoiceLineItem', 'discounts' => 'ChargeBee_InvoiceDiscount', 'taxes' => 'ChargeBee_InvoiceTax', 'invoice_transactions' => 'ChargeBee_InvoiceLinkedTransaction', 'orders' => 'ChargeBee_InvoiceLinkedOrder', 'invoice_notes' => 'ChargeBee_InvoiceNote', 'shipping_address' => 'ChargeBee_InvoiceShippingAddress', 'billing_address' => 'ChargeBee_InvoiceBillingAddress'));
     }
 
     function order() 
@@ -43,7 +43,7 @@ class ChargeBee_Result
     function transaction() 
     {
         return $this->_get('transaction', 'ChargeBee_Transaction', 
-        array('invoice_transactions' => 'ChargeBee_TransactionLinkedInvoice'));
+        array('invoice_transactions' => 'ChargeBee_TransactionLinkedInvoice', 'txn_refunds_and_reversals' => 'ChargeBee_TransactionLinkedRefund'));
     }
 
     function hostedPage() 
@@ -84,7 +84,8 @@ class ChargeBee_Result
 
     function event() 
     {
-        return $this->_get('event', 'ChargeBee_Event');
+        return $this->_get('event', 'ChargeBee_Event', 
+        array('webhooks' => 'ChargeBee_EventWebhook'));
     }
 
     function comment() 
@@ -99,7 +100,8 @@ class ChargeBee_Result
 
     function portalSession() 
     {
-        return $this->_get('portal_session', 'ChargeBee_PortalSession');
+        return $this->_get('portal_session', 'ChargeBee_PortalSession', 
+        array('linked_customers' => 'ChargeBee_PortalSessionLinkedCustomer'));
     }
 
 

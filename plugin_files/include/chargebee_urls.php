@@ -11,7 +11,7 @@
      <code><?php echo site_url() ?>?chargebee_plan_id=<i>&ltchargebee plan id&gt</i></code>
     <br/>
     <span class="description"> 
-         Use this URL and include appropriate plan IDs to create links if you’re using your own page for listing the available plans. If customers already have a valid card in ChargeBee, the subscription will be updated. Otherwise the customers will be taken to the hosted checkout page.
+         Use this URL and include appropriate plan IDs to create links if you’re using your own page for listing the available plans. If customers already have a valid card in Chargebee, the subscription will be updated. Otherwise the customers will be taken to the hosted checkout page.
    </span>
    </td>
  </tr>
@@ -23,7 +23,7 @@
      <code><?php echo site_url() ?>?chargebee_portal=true</code>
     <br/>
     <span class="description"> 
-      This URL will forward customers to ChargeBee's <a target="_blank" href="https://www.chargebee.com/docs/customer_portal.html">customer portal</a>. 
+      This URL will forward customers to Chargebee's <a target="_blank" href="https://www.chargebee.com/docs/customer_portal.html">customer portal</a>. 
     </span>
    </td>
  </tr> 
