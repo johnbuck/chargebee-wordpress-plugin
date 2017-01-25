@@ -1,3 +1,6 @@
+**We will be deprecating this plugin soon. Please use the [new Wordpress plugin](https://github.com/brendenplugin/chargebee-wp-membership-plugin).** 
+
+
 ChargeBee Wordpress Plugin for membership management.
 =====================================================
 
